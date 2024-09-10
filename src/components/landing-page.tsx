@@ -20,6 +20,7 @@ import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
 import { User, CreditCard, Target, Globe, CheckCircle, Laptop, Palette, Rocket } from 'lucide-react'
+import Image from 'next/image'
 
 const translations = {
   en: {
@@ -393,8 +394,14 @@ export function LandingPage() {
             <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700">{t.hero.cta}</Button>
           </div>
           <div className="relative hidden md:block">
-            <img src="/placeholder.svg?height=600&width=400&text=iPhone+Mockup" alt="iPhone Mockup" className="w-3/4 mx-auto" />
-            <img src="/placeholder.svg?height=300&width=500&text=Notebook+Mockup" alt="Notebook Mockup" className="absolute bottom-0 right-0 w-2/3" />
+            <Image
+              src="/showcasememock-front.png"
+              alt="Banner"
+              width={768}
+              height={192}
+              /* className="w-3/4 mx-auto"  */
+            />
+            
           </div>
         </div>
       </section>
