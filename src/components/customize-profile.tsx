@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "~/components/ui/dialog"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group"
 import { Switch } from "~/components/ui/switch"
+import { motion } from 'framer-motion'
 import { PlusCircle, Trash2 } from 'lucide-react'
 import { 
   Briefcase, 
@@ -65,7 +66,7 @@ type MiscSection = {
   content: string | string[];
 }
 
-const Dashboard: React.FC = () => {
+const CustomizePageComponent: React.FC = () => {
   const [services, setServices] = useState<Service[]>([])
   const [newService, setNewService] = useState<Service>({ title: '', description: '', icon: Briefcase })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -101,10 +102,24 @@ const Dashboard: React.FC = () => {
   ]
 
   return (
-    <div className="container w-2/3 mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Customize Your Profile</h1>
-      
-      <Tabs defaultValue="theme">
+    <div className="container mx-auto py-10">
+      <Card className='w-full max-w-2xl mx-auto border-0 shadow-none'>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Customize Your Profile</CardTitle>
+          <CardDescription>Manage your profile information </CardDescription>
+        </CardHeader>
+        <CardContent>
+      <Tabs defaultValue="theme" >
+        <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9 }}
+      >
         <TabsList>
           <TabsTrigger value="theme">Theme</TabsTrigger>
           <TabsTrigger value="content">Content</TabsTrigger>
@@ -112,9 +127,8 @@ const Dashboard: React.FC = () => {
           <TabsTrigger value="social">Social</TabsTrigger>
           <TabsTrigger value="misc">Misc</TabsTrigger>
         </TabsList>
-
         <TabsContent value="theme">
-          <Card>
+          <Card > 
             <CardHeader>
               <CardTitle>Select Theme</CardTitle>
               <CardDescription>Choose the theme for your profile page</CardDescription>
@@ -132,7 +146,7 @@ const Dashboard: React.FC = () => {
         </TabsContent>
 
         <TabsContent value="content">
-          <Card>
+          <Card className=''>
             <CardHeader>
               <CardTitle>Edit Content</CardTitle>
             </CardHeader>
@@ -324,9 +338,13 @@ const Dashboard: React.FC = () => {
             </CardContent>
           </Card>
         </TabsContent> */}
+        </motion.div>
       </Tabs>
+      </CardContent>
+    </motion.div>
+    </Card>
     </div>
   )
 }
 
-export default Dashboard
+export default CustomizePageComponent

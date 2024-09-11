@@ -10,8 +10,8 @@ const Sidebar: React.FC = () => {
   const menuItems = [
     { icon: Home, label: 'Dashboard', href: '/dashboard' },
     { icon: User, label: 'Profile', href: '/profile' },
-    { icon: Settings, label: 'Account Settings', href: '/settings' },
-    { icon: Layout, label: 'Customize Profile', href: '/customize' },
+    { icon: Settings, label: 'Account Settings', href: '/dashboard/settings' },
+    { icon: Layout, label: 'Customize Profile', href: '/dashboard/customize' },
   ]
 
   return (
