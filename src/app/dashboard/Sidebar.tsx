@@ -1,39 +1,94 @@
-"use client"
-import React from 'react'
-import Link from 'next/link'
-import { Home, User, Settings, Layout } from 'lucide-react'
-    import { usePathname } from 'next/navigation'
+"use client";
+import React, { useState } from "react";
+import {
+  IconArrowLeft,
+  IconBrandTabler,
+  IconSettings,
+  IconUserBolt,
+} from "@tabler/icons-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Sidebar,SidebarBody, SidebarLink } from "~/components/ui/sidebar";
+import { cn } from "~/lib/utils";
 
-const Sidebar: React.FC = () => {
-  const pathname = usePathname()
-
-  const menuItems = [
-    { icon: Home, label: 'Dashboard', href: '/dashboard' },
-    { icon: User, label: 'Profile', href: '/profile' },
-    { icon: Settings, label: 'Account Settings', href: '/dashboard/settings' },
-    { icon: Layout, label: 'Customize Profile', href: '/dashboard/customize' },
-  ]
-
+export function SidebarComponent() {
+  const links = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: (
+        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Profile",
+      href: "/dashboard/profile",
+      icon: (
+        <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Settings",
+      href: "/dashboard/settings",
+      icon: (
+        <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Logout",
+      href: "#",
+      icon: (
+        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+  ];
+  const [open, setOpen] = useState(false);
   return (
-    <aside className="w-64 h-screen bg-gray-100 text-gray-900 p-4">
-      <nav>
-        <ul className="space-y-2">
-          {menuItems.map((item) => (
-            <li key={item.href}>
-              <Link className={`flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-200 ${
-                  pathname === item.href ? 'bg-gray-200' : ''
-                }`} href={item.href}>
-              
-                  <item.icon className="w-5 h-5" />
-                  <span>{item.label}</span>
-             
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </aside>
-  )
-}
+    
+      <Sidebar open={open} setOpen={setOpen} animate={true}>
+        <SidebarBody className="justify-between gap-10 h-screen">
+          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+            <>
+              <Logo />
+            </>
+            <div className="mt-8 flex flex-col gap-2">
+              {links.map((link, idx) => (
+                <SidebarLink key={idx} link={link} />
+              ))}
+            </div>
+          </div>
+        </SidebarBody>
+      </Sidebar>
+ 
 
-export default Sidebar
+  );
+}
+export const Logo = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+    >
+      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="font-medium text-black dark:text-white whitespace-pre"
+      >
+        Showcase Me
+      </motion.span>
+    </Link>
+  );
+};
+export const LogoIcon = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+    >
+      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+    </Link>
+  );
+};
+

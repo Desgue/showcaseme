@@ -1,6 +1,6 @@
 import React from 'react'
-import Sidebar from './Sidebar'
 import { Toaster } from '~/components/ui/toaster';
+import {  SidebarComponent } from './Sidebar';
 
 
 interface DashboardLayoutProps {
@@ -10,7 +10,7 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <div className="flex">
-      <Sidebar />
+      <SidebarComponent />
       <main className="flex-1 p-4">
         {children}
         <Toaster/>
