@@ -9,13 +9,14 @@ interface DashboardLayoutProps {
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   return (
-    <div className="flex">
+    <main className="flex">
       <SidebarComponent />
-      <main className="flex-1 p-4">
+      <div className='flex-1'>
         {children}
         <Toaster/>
-      </main>
-    </div>
+
+      </div>
+    </main>
   )
 }
 

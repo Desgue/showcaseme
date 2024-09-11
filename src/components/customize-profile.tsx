@@ -115,7 +115,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
 
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 max-w-2xl">
       <Card className='w-full max-w-2xl mx-auto border-0 shadow-none'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}

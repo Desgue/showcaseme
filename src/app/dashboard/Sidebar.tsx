@@ -45,7 +45,8 @@ export function SidebarComponent() {
   ];
   const [open, setOpen] = useState(false);
   return (
-    
+    <div className="inset-0 ">
+
       <Sidebar open={open} setOpen={setOpen} animate={true}>
         <SidebarBody className="justify-between gap-10 h-screen">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -55,11 +56,12 @@ export function SidebarComponent() {
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
                 <SidebarLink key={idx} link={link} />
-              ))}
+                ))}
             </div>
           </div>
         </SidebarBody>
       </Sidebar>
+</div>
  
 
   );

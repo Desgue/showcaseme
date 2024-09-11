@@ -20,7 +20,9 @@ const CustomizePage = async () => {
     const profile = await fetchUserProfileById(data.user.id)
     const services = await fetchServicesByUserId(data.user.id)
   return (
-    <CustomizePageComponent props={{profile, services}}/>
+    <main className=''>
+      <CustomizePageComponent props={{profile, services}}/>
+    </main>
   )
 }
 
