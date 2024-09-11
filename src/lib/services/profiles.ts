@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { UserProfile } from "../types/profiles";
+import { prisma } from "../utils";
 
-const prisma = new PrismaClient({ log: ['query'] })
 
-export async function fetchUserProfileById(id: string): Promise<{ full_name: string, title: string, bio: string, slug: string }> {
+export async function fetchUserProfileById(id: string): Promise<UserProfile> {
     const emptyRes = {
         full_name: "",
         title: "",
@@ -31,7 +32,7 @@ export async function fetchUserProfileById(id: string): Promise<{ full_name: str
     }
 }
 
-export async function fetchUserProfileBySlug(slug: string): Promise<{ full_name: string, title: string, bio: string, slug: string }> {
+export async function fetchUserProfileBySlug(slug: string): Promise<UserProfile> {
     const emptyRes = {
         full_name: "",
         title: "",

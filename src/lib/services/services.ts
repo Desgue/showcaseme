@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { Service, iconOptions, isOfTypeIconLabel } from "../types/services"
+import { prisma } from "../utils"
 
-const prisma = new PrismaClient({ log: ['query'] })
 
 
 export async function fetchServicesByUserId(id: string): Promise<Service[]> {

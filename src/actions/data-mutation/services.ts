@@ -4,8 +4,8 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod'
 import { createClient } from '~/utils/supabase/server';
 import { createServiceSchema, iconOptions } from '~/lib/types/services';
+import { prisma } from '~/lib/utils';
 
-const prisma = new PrismaClient({ log: ['query'] })
 
 export async function createServiceAction(values: z.infer<typeof createServiceSchema>) {
     const supabase = createClient();
@@ -13,13 +13,11 @@ export async function createServiceAction(values: z.infer<typeof createServiceSc
     if (error || !data?.user) {
         redirect("/login");
     }
-    try {
-        await prisma.services.create({
-            data: { profile_id: data.user.id, title: values.title, description: values.description, icon: values.icon_label, updated_at: new Date() },
-        })
-    } catch (e) {
-        console.error(e)
-    }
+
+    await prisma.services.create({
+        data: { profile_id: data.user.id, title: values.title, description: values.description, icon: values.icon_label, updated_at: new Date() },
+    })
+
 }
 
 export async function deleteServiceAction(id: number) {
@@ -28,13 +26,11 @@ export async function deleteServiceAction(id: number) {
     if (error || !data?.user) {
         redirect("/login");
     }
-    try {
-        await prisma.services.delete(
-            {
-                where: { id: BigInt(id) }
-            }
-        )
-    } catch (e) {
-        console.error(e)
-    }
+
+    await prisma.services.delete(
+        {
+            where: { id: BigInt(id) }
+        }
+    )
+
 }
