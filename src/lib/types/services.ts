@@ -20,7 +20,7 @@ export type Service = {
     id: number,
     title: string,
     description: string,
-    details: string,
+    details: string | null,
     icon: IconLabel | null
 }
 

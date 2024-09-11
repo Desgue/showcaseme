@@ -3,12 +3,12 @@ import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { createClient } from "~/utils/supabase/server"
 
-const LoginRedirectPath = "/"
+const LoginRedirectPath = "/dashboard/profile"
 export async function googlelogin() {
     const supabase = createClient()
     const h = headers()
     const host = h.get('host')
-    const protocol = h.get('x-forwarded-proto') || 'http'
+    const protocol = h.get('x-forwarded-proto') ?? 'http'
     const fullUrl = `${protocol}://${host}`
 
     const redirectUrl = new URL(fullUrl)

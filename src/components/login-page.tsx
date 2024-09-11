@@ -8,7 +8,7 @@ import { googlelogin } from '~/actions/supabase/auth'
 
 const LoginPageComponent: React.FC = () => {
   const handleGoogleLogin = () => {
-    googlelogin()
+    googlelogin().catch(e=>console.error(e))
     console.log('Google login clicked')
   }
 

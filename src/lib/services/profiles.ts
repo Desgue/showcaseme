@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { UserProfile } from "../types/profiles";
 import { prisma } from "../utils";
 
@@ -18,10 +17,10 @@ export async function fetchUserProfileById(id: string): Promise<UserProfile> {
         })
         if (result) {
             const profile = {
-                full_name: result.full_name as string,
-                title: result.title as string,
-                bio: result.bio as string,
-                slug: result.slug as string
+                full_name: result.full_name!,
+                title: result.title!,
+                bio: result.bio!,
+                slug: result.slug!
             }
             return profile
         }
@@ -47,10 +46,10 @@ export async function fetchUserProfileBySlug(slug: string): Promise<UserProfile>
         })
         if (result) {
             const profile = {
-                full_name: result.full_name as string,
-                title: result.title as string,
-                bio: result.bio as string,
-                slug: result.slug as string
+                full_name: result.full_name!,
+                title: result.title!,
+                bio: result.bio!,
+                slug: result.slug!
             }
             return profile
         }

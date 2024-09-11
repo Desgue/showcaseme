@@ -68,7 +68,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
 
   const handleRemoveService = (index: number, id: number) => {
     setServices(services.filter((_, i) => i !== index))
-    deleteServiceAction(id)
+    deleteServiceAction(id).catch(e => console.error(e))
   }
 
   const [socials, setSocials] = useState<Social[]>([])
@@ -95,7 +95,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
   })
 
   function profileFormSubmit(values: z.infer<typeof updateProfileSchema>) {
-    updateProfileAction(values)
+    updateProfileAction(values).catch(e=>console.error(e))
   }
 
   const servicesForm = useForm<z.infer<typeof createServiceSchema>>({
@@ -110,7 +110,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
   function ServicesFormSubmit(values: z.infer<typeof createServiceSchema> ){
     console.log("ss")
     handleAddService()
-    createServiceAction(values)
+    createServiceAction(values).catch(e=>console.error(e))
   }
 
 

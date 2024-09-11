@@ -94,7 +94,7 @@ export function ProfilePageComponent({profile}: {profile:{ full_name: string, ti
           <Card>
             <CardContent className="mt-4 flex flex-col gap-1">
               <h2 className="text-xl font-semibold mb-2">Sobre Mim</h2>
-              {profile.bio.split("\n").map((p) => <p className="text-muted-foreground">{p}</p> )}
+              {profile.bio.split("\n").map((p,idx) => <p key={idx} className="text-muted-foreground">{p}</p> )}
             </CardContent>
           </Card>
         </TabsContent>

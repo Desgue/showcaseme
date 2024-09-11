@@ -1,5 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { type CookieSerializeOptions } from "cookie";
+type CookieOptions = Partial<CookieSerializeOptions>;
 
 export function createClient() {
     const cookieStore = cookies()
@@ -15,7 +17,7 @@ export function createClient() {
                 setAll(cookiesToSet) {
                     try {
                         cookiesToSet.forEach(({ name, value, options }) =>
-                            cookieStore.set(name, value, options)
+                            cookieStore.set(name, value, options as CookieOptions)
                         )
                     } catch {
                         // The `setAll` method was called from a Server Component.
