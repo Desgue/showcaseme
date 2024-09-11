@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import { FaGoogle } from 'react-icons/fa'
+import { googlelogin } from '~/app/actions/supabase/auth'
 
 const LoginPageComponent: React.FC = () => {
   const handleGoogleLogin = () => {
-    // Implement Google OAuth login logic here
+    googlelogin()
     console.log('Google login clicked')
   }
 
@@ -55,13 +56,15 @@ const LoginPageComponent: React.FC = () => {
               <CardDescription className="text-center">Sign in to create your professional website</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button
-                className="w-full flex items-center justify-center space-x-2"
-                onClick={handleGoogleLogin}
-              >
-                <FaGoogle />
-                <span>Sign in with Google</span>
-              </Button>
+              <form>
+                <Button
+                  className="w-full flex items-center justify-center space-x-2"
+                  formAction={handleGoogleLogin}
+                  >
+                  <FaGoogle />
+                  <span>Sign in with Google</span>
+                </Button>
+              </form>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <p className="text-sm text-gray-500 text-center">
