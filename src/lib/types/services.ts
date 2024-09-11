@@ -20,6 +20,7 @@ export type Service = {
     id: number,
     title: string,
     description: string,
+    details: string,
     icon: IconLabel | null
 }
 
@@ -62,6 +63,7 @@ export const iconOptions: Record<IconLabel, React.ElementType> = {
 
 export const createServiceSchema = z.object({
     title: z.string().min(2).max(50),
-    description: z.string(),
+    description: z.string().min(2).max(50),
+    details: z.string().min(2),
     icon_label: z.enum(iconLabels),
 })

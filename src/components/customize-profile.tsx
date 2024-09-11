@@ -57,12 +57,12 @@ type CustomizePageProps = {
 
 const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) => {
   const [services, setServices] = useState<Service[]>(props.services)
-  const [newService, setNewService] = useState<Service>({id:0, title: '', description: '', icon: "Briefcase" })
+  const [newService, setNewService] = useState<Service>({id:0, title: '', description: '',details: "", icon: "Briefcase" })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   
   const handleAddService = () => {
     setServices([...services, newService])
-    setNewService({id:0, title: '', description: '', icon: "Briefcase" })
+    setNewService({id:0, title: '', description: '', details: "",icon: "Briefcase" })
     setIsDialogOpen(false)
   }
 
@@ -103,6 +103,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
     defaultValues: {
       title: "",
       description: "",
+      details: "",
     },
   })
 
@@ -251,7 +252,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
                        <FormItem>
                          <FormLabel>Service Title</FormLabel>
                          <FormControl>
-                         <Input id="serviceTitle" placeholder="" {...field} onChange={(e) => {field.onChange(e.target.value); setNewService({...newService, title: e.target.value})}}  />
+                         <Input id="serviceTitle" placeholder="Add the service title..." {...field} onChange={(e) => {field.onChange(e.target.value); setNewService({...newService, title: e.target.value})}}  />
                          </FormControl>
                          <FormMessage />
                        </FormItem>
@@ -263,11 +264,10 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
                      name="description"
                      render={({ field }) => (
                        <FormItem>
-                         <FormLabel>Bio</FormLabel>
+                         <FormLabel>Brief Description</FormLabel>
                          <FormControl>
-                          <Textarea 
-                            className='h-32' 
-                            id="bio" 
+                          <Input 
+                            id="description" 
                             placeholder="Write a brief description about the service..." {...field} 
                             onChange={(e) =>{ field.onChange(e.target.value);  setNewService({...newService, description: e.target.value})}}/>
                          </FormControl>
@@ -275,14 +275,24 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
                        </FormItem>
                      )}
                    />
-                    {/* <div className="space-y-2">
-                      <Label htmlFor="serviceDescription">Description</Label>
-                      <Textarea 
-                        id="serviceDescription"
-                        value={newService.description}
-                        onChange={(e) => setNewService({...newService, description: e.target.value})}
-                      />
-                    </div> */}
+                    <FormField
+                     control={servicesForm.control}
+                     name="details"
+                     render={({ field }) => (
+                       <FormItem>
+                         <FormLabel>Details</FormLabel>
+                         <FormControl>
+                          <Textarea 
+                            className='h-32' 
+                            id="details" 
+                            placeholder="Write a detailed description about the service..." {...field} 
+                            onChange={(e) =>{ field.onChange(e.target.value);  setNewService({...newService, details: e.target.value})}}/>
+                         </FormControl>
+                         <FormMessage />
+                       </FormItem>
+                     )}
+                   />
+
                     <FormField
                       control={servicesForm.control}
                       name="icon_label"

@@ -15,7 +15,7 @@ export async function createServiceAction(values: z.infer<typeof createServiceSc
     }
 
     await prisma.services.create({
-        data: { profile_id: data.user.id, title: values.title, description: values.description, icon: values.icon_label, updated_at: new Date() },
+        data: { profile_id: data.user.id, title: values.title, description: values.description, details: values.details, icon: values.icon_label, updated_at: new Date() },
     })
 
 }
