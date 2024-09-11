@@ -38,13 +38,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
-const profileSchema = z.object({
-  full_name: z.string().min(2).max(50),
-  title: z.string().optional(),
-  bio: z.string().optional(),
-})
-
+import { updateProfileSchema } from '~/lib/types/profiles'
+import { updateProfileAction } from '~/actions/data-mutation/profiles'
+import { fetchUserProfile } from '~/lib/services/profiles'
 
 type Service = {
   title: string;
@@ -81,12 +77,23 @@ type MiscSection = {
   type: 'text' | 'list';
   content: string | string[];
 }
+const socialPlatforms = [
+  'Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'GitHub', 'YouTube', 'TikTok', 'Pinterest', 'Snapchat'
+]
 
-const CustomizePageComponent: React.FC = () => {
+type CustomizePageProps = {
+  profile: {
+    full_name: string
+    title: string
+    bio: string
+  }
+}
+
+const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) => {
   const [services, setServices] = useState<Service[]>([])
   const [newService, setNewService] = useState<Service>({ title: '', description: '', icon: Briefcase })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-
+  
   const handleAddService = () => {
     setServices([...services, newService])
     setNewService({ title: '', description: '', icon: Briefcase })
@@ -110,24 +117,18 @@ const CustomizePageComponent: React.FC = () => {
     setSocials(socials.filter((_, i) => i !== index))
   }
 
-  const socialPlatforms = [
-    'Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'GitHub', 'YouTube', 'TikTok', 'Pinterest', 'Snapchat'
-  ]
 
-
-  const profileForm = useForm<z.infer<typeof profileSchema>>({
-    resolver: zodResolver(profileSchema),
+  const profileForm = useForm<z.infer<typeof updateProfileSchema>>({
+    resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      full_name: "",
-      title: "",
-      bio:"",
+      full_name: props.profile.full_name,
+      title: props.profile.title,
+      bio: props.profile.bio,
     },
   })
 
-  function profileFormSubmit(values: z.infer<typeof profileSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  function profileFormSubmit(values: z.infer<typeof updateProfileSchema>) {
+    updateProfileAction(values)
   }
 
 
@@ -218,7 +219,7 @@ const CustomizePageComponent: React.FC = () => {
                        <FormItem>
                          <FormLabel>Bio</FormLabel>
                          <FormControl>
-                          <Textarea id="bio" placeholder="Write a brief description about yourself..." {...field}/>
+                          <Textarea className='h-52' id="bio" placeholder="Write a brief description about yourself..." {...field}/>
                          </FormControl>
                          <FormMessage />
                        </FormItem>

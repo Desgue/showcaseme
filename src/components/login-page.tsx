@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import { FaGoogle } from 'react-icons/fa'
-import { googlelogin } from '~/app/actions/supabase/auth'
+import { googlelogin } from '~/actions/supabase/auth'
 
 const LoginPageComponent: React.FC = () => {
   const handleGoogleLogin = () => {
