@@ -12,14 +12,15 @@ import {
     Globe,
     MessageCircle
 } from 'lucide-react'
+import { z } from 'zod'
 
 
 // Type for Service object
 export type Service = {
-    id: Number,
+    id: number,
     title: string,
     description: string,
-    icon: React.ElementType | null
+    icon: IconLabel | null
 }
 
 // Constant array of icon labels
@@ -43,7 +44,7 @@ type IconOption = {
 }
 
 // Array of icon options with icon and label
-export const iconOptions = {
+export const iconOptions: Record<IconLabel, React.ElementType> = {
     Briefcase: Briefcase,
     Code: Code,
     PenTool: PenTool,
@@ -58,3 +59,9 @@ export const iconOptions = {
     MessageCircle: MessageCircle
 };
 
+
+export const createServiceSchema = z.object({
+    title: z.string().min(2).max(50),
+    description: z.string(),
+    icon_label: z.enum(iconLabels),
+})

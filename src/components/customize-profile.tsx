@@ -27,7 +27,8 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { updateProfileSchema } from '~/lib/types/profiles'
 import { updateProfileAction } from '~/actions/data-mutation/profiles'
-import {  Service, iconOptions } from '~/lib/types/services'
+import {  IconLabel, Service, createServiceSchema, iconOptions } from '~/lib/types/services'
+import { createServiceAction, deleteServiceAction } from '~/actions/data-mutation/services'
 
 
 
@@ -56,17 +57,18 @@ type CustomizePageProps = {
 
 const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) => {
   const [services, setServices] = useState<Service[]>(props.services)
-  const [newService, setNewService] = useState<Service >({id:0, title: '', description: '', icon: iconOptions["Briefcase"] })
+  const [newService, setNewService] = useState<Service>({id:0, title: '', description: '', icon: "Briefcase" })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   
   const handleAddService = () => {
     setServices([...services, newService])
-    setNewService({id:0, title: '', description: '', icon: iconOptions["Briefcase"] })
+    setNewService({id:0, title: '', description: '', icon: "Briefcase" })
     setIsDialogOpen(false)
   }
 
-  const handleRemoveService = (index: number) => {
+  const handleRemoveService = (index: number, id: number) => {
     setServices(services.filter((_, i) => i !== index))
+    deleteServiceAction(id)
   }
 
   const [socials, setSocials] = useState<Social[]>([])
@@ -94,6 +96,20 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
 
   function profileFormSubmit(values: z.infer<typeof updateProfileSchema>) {
     updateProfileAction(values)
+  }
+
+  const servicesForm = useForm<z.infer<typeof createServiceSchema>>({
+    resolver: zodResolver(createServiceSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+    },
+  })
+
+  function ServicesFormSubmit(values: z.infer<typeof createServiceSchema> ){
+    console.log("ss")
+    handleAddService()
+    createServiceAction(values)
   }
 
 
@@ -206,11 +222,11 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {props.services.map((service, index) => (
+          {services.map((service, index) => (
             <div key={index} className="flex items-center space-x-2 p-2 bg-gray-100 rounded-md">
-              {service.icon && React.createElement(service.icon, { className: "w-5 h-5" })}
+              {service.icon && React.createElement(iconOptions[service.icon], { className: "w-5 h-5" })}
               <span className="flex-grow">{service.title}</span>
-              <Button variant="destructive" size="icon" onClick={() => handleRemoveService(index)}>
+              <Button variant="destructive" size="icon" onClick={() => handleRemoveService(index, service.id)}>
                 <Trash2 className="w-4 h-4" />
               </Button>
             </div>
@@ -220,46 +236,85 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
               <Button><PlusCircle className="w-4 h-4 mr-2" /> Add Service</Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Add New Service</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="serviceTitle">Service Title</Label>
-                  <Input 
-                    id="serviceTitle" 
-                    value={newService.title}
-                    onChange={(e) => setNewService({...newService, title: e.target.value})}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="serviceDescription">Description</Label>
-                  <Textarea 
-                    id="serviceDescription"
-                    value={newService.description}
-                    onChange={(e) => setNewService({...newService, description: e.target.value})}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Icon</Label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {Object.entries(iconOptions).map(([label, value]) => (
-                      <Button
-                        key={label}
-                        variant={newService.icon === value ? "default" : "outline"}
-                        className="flex flex-col items-center p-2"
-                        onClick={() => setNewService({...newService, icon: value})}
-                      >
-                        {React.createElement(value, { className: "w-6 h-6 mb-1" })}
-                        <span className="text-xs">{label}</span>
-                      </Button>
-                    ))}
+              <Form {...servicesForm}>
+                <form className="flex flex-col gap-4" onSubmit={servicesForm.handleSubmit(ServicesFormSubmit)}>
+
+                  <DialogHeader>
+                    <DialogTitle>Add New Service</DialogTitle>
+                  </DialogHeader>
+
+                  <div className="flex flex-col gap-4">
+                  <FormField
+                     control={servicesForm.control}
+                     name="title"
+                     render={({ field }) => (
+                       <FormItem>
+                         <FormLabel>Service Title</FormLabel>
+                         <FormControl>
+                         <Input id="serviceTitle" placeholder="" {...field} onChange={(e) => {field.onChange(e.target.value); setNewService({...newService, title: e.target.value})}}  />
+                         </FormControl>
+                         <FormMessage />
+                       </FormItem>
+                     )}
+                   />
+
+                    <FormField
+                     control={servicesForm.control}
+                     name="description"
+                     render={({ field }) => (
+                       <FormItem>
+                         <FormLabel>Bio</FormLabel>
+                         <FormControl>
+                          <Textarea 
+                            className='h-32' 
+                            id="bio" 
+                            placeholder="Write a brief description about the service..." {...field} 
+                            onChange={(e) =>{ field.onChange(e.target.value);  setNewService({...newService, description: e.target.value})}}/>
+                         </FormControl>
+                         <FormMessage />
+                       </FormItem>
+                     )}
+                   />
+                    {/* <div className="space-y-2">
+                      <Label htmlFor="serviceDescription">Description</Label>
+                      <Textarea 
+                        id="serviceDescription"
+                        value={newService.description}
+                        onChange={(e) => setNewService({...newService, description: e.target.value})}
+                      />
+                    </div> */}
+                    <FormField
+                      control={servicesForm.control}
+                      name="icon_label"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Icon</FormLabel>
+                          <FormControl>
+                            <div className="grid grid-cols-3 gap-2">
+                              {Object.entries(iconOptions).map(([label, Icon]) => (
+                                <Button
+                                  key={label}
+                                  type="button"
+                                  variant={field.value === label ? "default" : "outline"}
+                                  className="flex flex-col items-center p-2"
+                                  onClick={(e) => {e.preventDefault(); field.onChange(label); setNewService({...newService, icon: label as IconLabel})}}
+                                >
+                                  <span className="text-xs">{label}</span>
+                                </Button>
+                              ))}
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
                   </div>
-                </div>
-              </div>
-              <DialogFooter>
-                <Button onClick={handleAddService}>Add Service</Button>
-              </DialogFooter>
+                  <DialogFooter className='w-full mt-4'>
+                    <Button>Add Service</Button>
+                  </DialogFooter>
+              </form>
+            </Form>  
             </DialogContent>
           </Dialog>
         </div>
