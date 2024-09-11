@@ -11,21 +11,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group"
 import { Switch } from "~/components/ui/switch"
 import { motion } from 'framer-motion'
-import { PlusCircle, Trash2 } from 'lucide-react'
-import { 
-  Briefcase, 
-  Code, 
-  PenTool, 
-  Camera, 
-  Music, 
-  Book, 
-  Heart, 
-  Scissors, 
-  Coffee,
-  Wrench,
-  Globe,
-  MessageCircle
-} from 'lucide-react'
+import { Briefcase, PlusCircle, Trash2 } from 'lucide-react'
+
 import {
   Form,
   FormControl,
@@ -40,33 +27,10 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { updateProfileSchema } from '~/lib/types/profiles'
 import { updateProfileAction } from '~/actions/data-mutation/profiles'
-import { fetchUserProfile } from '~/lib/services/profiles'
+import {  Service, iconOptions } from '~/lib/types/services'
 
-type Service = {
-  title: string;
-  description: string;
-  icon: React.ElementType;
-}
 
-type IconOption = {
-  icon: React.ElementType;
-  label: string;
-}
 
-const iconOptions: IconOption[] = [
-  { icon: Briefcase, label: 'Business' },
-  { icon: Code, label: 'Programming' },
-  { icon: PenTool, label: 'Design' },
-  { icon: Camera, label: 'Photography' },
-  { icon: Music, label: 'Music' },
-  { icon: Book, label: 'Education' },
-  { icon: Heart, label: 'Health' },
-  { icon: Scissors, label: 'Fashion' },
-  { icon: Coffee, label: 'Food & Drink' },
-  { icon: Wrench, label: 'Repair' },
-  { icon: Globe, label: 'Travel' },
-  { icon: MessageCircle, label: 'Consulting' }
-]
 
 type Social = {
   platform: string;
@@ -87,16 +51,17 @@ type CustomizePageProps = {
     title: string
     bio: string
   }
+  services: Service[]
 }
 
 const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) => {
-  const [services, setServices] = useState<Service[]>([])
-  const [newService, setNewService] = useState<Service>({ title: '', description: '', icon: Briefcase })
+  const [services, setServices] = useState<Service[]>(props.services)
+  const [newService, setNewService] = useState<Service >({id:0, title: '', description: '', icon: iconOptions["Briefcase"] })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   
   const handleAddService = () => {
     setServices([...services, newService])
-    setNewService({ title: '', description: '', icon: Briefcase })
+    setNewService({id:0, title: '', description: '', icon: iconOptions["Briefcase"] })
     setIsDialogOpen(false)
   }
 
@@ -241,9 +206,9 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {services.map((service, index) => (
+          {props.services.map((service, index) => (
             <div key={index} className="flex items-center space-x-2 p-2 bg-gray-100 rounded-md">
-              {React.createElement(service.icon, { className: "w-5 h-5" })}
+              {service.icon && React.createElement(service.icon, { className: "w-5 h-5" })}
               <span className="flex-grow">{service.title}</span>
               <Button variant="destructive" size="icon" onClick={() => handleRemoveService(index)}>
                 <Trash2 className="w-4 h-4" />
@@ -278,15 +243,15 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
                 <div className="space-y-2">
                   <Label>Icon</Label>
                   <div className="grid grid-cols-3 gap-2">
-                    {iconOptions.map((option) => (
+                    {Object.entries(iconOptions).map(([label, value]) => (
                       <Button
-                        key={option.label}
-                        variant={newService.icon === option.icon ? "default" : "outline"}
+                        key={label}
+                        variant={newService.icon === value ? "default" : "outline"}
                         className="flex flex-col items-center p-2"
-                        onClick={() => setNewService({...newService, icon: option.icon})}
+                        onClick={() => setNewService({...newService, icon: value})}
                       >
-                        {React.createElement(option.icon, { className: "w-6 h-6 mb-1" })}
-                        <span className="text-xs">{option.label}</span>
+                        {React.createElement(value, { className: "w-6 h-6 mb-1" })}
+                        <span className="text-xs">{label}</span>
                       </Button>
                     ))}
                   </div>
