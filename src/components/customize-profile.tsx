@@ -26,6 +26,24 @@ import {
   Globe,
   MessageCircle
 } from 'lucide-react'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+const profileSchema = z.object({
+  full_name: z.string().min(2).max(50),
+  title: z.string().optional(),
+  bio: z.string().optional(),
+})
 
 
 type Service = {
@@ -53,8 +71,6 @@ const iconOptions: IconOption[] = [
   { icon: Globe, label: 'Travel' },
   { icon: MessageCircle, label: 'Consulting' }
 ]
-
-
 
 type Social = {
   platform: string;
@@ -85,9 +101,6 @@ const CustomizePageComponent: React.FC = () => {
   const [newSocial, setNewSocial] = useState<Social>({ platform: '', url: '' })
   /* const [miscSection, setMiscSection] = useState<MiscSection>({ type: 'text', content: '' }) */
 
-
-
-
   const handleAddSocial = () => {
     setSocials([...socials, newSocial])
     setNewSocial({ platform: '', url: '' })
@@ -101,6 +114,23 @@ const CustomizePageComponent: React.FC = () => {
     'Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'GitHub', 'YouTube', 'TikTok', 'Pinterest', 'Snapchat'
   ]
 
+
+  const profileForm = useForm<z.infer<typeof profileSchema>>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      full_name: "",
+      title: "",
+      bio:"",
+    },
+  })
+
+  function profileFormSubmit(values: z.infer<typeof profileSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  }
+
+
   return (
     <div className="container mx-auto py-10">
       <Card className='w-full max-w-2xl mx-auto border-0 shadow-none'>
@@ -110,8 +140,8 @@ const CustomizePageComponent: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Customize Your Profile</CardTitle>
-          <CardDescription>Manage your profile information </CardDescription>
+          <CardTitle className="text-2xl font-bold">Customize Your Profile Page</CardTitle>
+          <CardDescription>Manage your page information </CardDescription>
         </CardHeader>
         <CardContent>
       <Tabs defaultValue="theme" >
@@ -122,7 +152,7 @@ const CustomizePageComponent: React.FC = () => {
       >
         <TabsList>
           <TabsTrigger value="theme">Theme</TabsTrigger>
-          <TabsTrigger value="content">Content</TabsTrigger>
+          <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="services">Services</TabsTrigger>
           <TabsTrigger value="social">Social</TabsTrigger>
           <TabsTrigger value="misc">Misc</TabsTrigger>
@@ -145,25 +175,61 @@ const CustomizePageComponent: React.FC = () => {
           </Card>
         </TabsContent>
 
-        <TabsContent value="content">
-          <Card className=''>
-            <CardHeader>
-              <CardTitle>Edit Content</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Your Name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="title">Professional Title</Label>
-                <Input id="title" placeholder="e.g. Certified Personal Trainer" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea id="bio" placeholder="Write a brief description about yourself..." />
-              </div>
+        <TabsContent value="profile">
+          <Card>
+            <Form {...profileForm}>
+              <form onSubmit={profileForm.handleSubmit(profileFormSubmit)} >
+                <CardHeader>
+                  <CardTitle>Edit Profile</CardTitle>
+                </CardHeader>
+                <CardContent className='space-y-4'>
+                  <FormField
+                     control={profileForm.control}
+                     name="full_name"
+                     render={({ field }) => (
+                       <FormItem>
+                         <FormLabel>Name</FormLabel>
+                         <FormControl>
+                         <Input id="name" placeholder="Your Name" {...field} />
+                         </FormControl>
+                         <FormMessage />
+                       </FormItem>
+                     )}
+                   />
+
+                  <FormField
+                     control={profileForm.control}
+                     name="title"
+                     render={({ field }) => (
+                       <FormItem>
+                         <FormLabel>Professional Title</FormLabel>
+                         <FormControl>
+                           <Input id="title" placeholder="e.g. Certified Personal Trainer" {...field}/>
+                         </FormControl>
+                         <FormMessage />
+                       </FormItem>
+                     )}
+                   />
+
+                  <FormField
+                     control={profileForm.control}
+                     name="bio"
+                     render={({ field }) => (
+                       <FormItem>
+                         <FormLabel>Bio</FormLabel>
+                         <FormControl>
+                          <Textarea id="bio" placeholder="Write a brief description about yourself..." {...field}/>
+                         </FormControl>
+                         <FormMessage />
+                       </FormItem>
+                     )}
+                   />
             </CardContent>
+            <CardFooter className='flex justify-end'>
+              <Button type='submit'>Confirm</Button>
+            </CardFooter>
+              </form>
+            </Form>
           </Card>
         </TabsContent>
 
