@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import React from 'react'
 import CustomizePageComponent from '~/components/customize-profile'
-import { fetchUserProfile } from '~/lib/services/profiles';
+import { fetchUserProfileById } from '~/lib/services/profiles';
 import { createClient } from '~/utils/supabase/server';
 
 const CustomizePage = async () => {
@@ -10,7 +10,7 @@ const CustomizePage = async () => {
     if (error || !data?.user) {
         redirect("/login");
     }
-    const profile = await fetchUserProfile(data.user.id)
+    const profile = await fetchUserProfileById(data.user.id)
   return (
     <CustomizePageComponent props={{profile}}/>
   )

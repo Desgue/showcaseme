@@ -38,7 +38,7 @@ const services = [
 
 ]
 
-export function ProfilePage() {
+export function ProfilePageComponent({profile}: {profile:{ full_name: string, title: string, bio: string, slug: string }}) {
   return (
     <div className="w-full max-w-5xl mx-auto">
       {/* Banner */}
@@ -65,8 +65,8 @@ export function ProfilePage() {
 
       {/* Name and Title */}
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-bold">Eduardo Guedes</h1>
-        <p className="text-muted-foreground">Desenvolvedor de Software Freelance</p>
+        <h1 className="text-2xl font-bold">{profile.full_name}</h1>
+        <p className="text-muted-foreground">{profile.title}</p>
       </div>
 
       {/* Social Media Links */}
@@ -94,13 +94,7 @@ export function ProfilePage() {
           <Card>
             <CardContent className="mt-4 flex flex-col gap-1">
               <h2 className="text-xl font-semibold mb-2">Sobre Mim</h2>
-              <p className="text-muted-foreground">
-              Com mais de um ano de experiência profissional no desenvolvimento de software, sou um programador especializado em soluções sob medida, tanto para backend quanto para frontend. 
-              </p>
-              <p className="text-muted-foreground">Minha proficiência em Golang, TypeScript e PostgreSQL me permite criar arquiteturas robustas e escaláveis para sistemas complexos, garantindo desempenho e confiabilidade. 
-              </p>
-              <p className="text-muted-foreground">No frontend, domino Next.js, criando interfaces modernas, interativas e eficientes.</p>
-              <p className="text-muted-foreground">Sou o criador de duas plataformas inovadoras, o Showcase Me e o Elleva.me, e estou disponível para colaborar em novos projetos, oferecendo uma abordagem personalizada para atender às necessidades específicas de cada cliente.</p>
+              {profile.bio.split("\n").map((p) => <p className="text-muted-foreground">{p}</p> )}
             </CardContent>
           </Card>
         </TabsContent>
