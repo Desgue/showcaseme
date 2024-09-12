@@ -9,6 +9,9 @@ import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon,  CodeIcon, MixerHo
 import Link from "next/link"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
 import { DialogTrigger } from "@radix-ui/react-dialog"
+import { UserProfile } from "~/lib/types/profiles"
+import { Service, iconOptions } from "~/lib/types/services"
+import React from "react"
 
 const services = [
   {
@@ -38,7 +41,11 @@ const services = [
 
 ]
 
-export function ProfilePageComponent({profile}: {profile:{ full_name: string, title: string, bio: string, slug: string }}) {
+type ProfilePageProps = {
+  profile: UserProfile
+  services: Service[]
+}
+export function ProfilePageComponent({profile, services}: ProfilePageProps) {
   return (
     <div className="w-full max-w-5xl mx-auto">
       {/* Banner */}
@@ -127,7 +134,7 @@ export function ProfilePageComponent({profile}: {profile:{ full_name: string, ti
                     <DialogTrigger asChild>
                       <Card className="cursor-pointer hover:bg-accent transition-colors">
                         <CardContent className="p-4 flex flex-col items-center text-center">
-                          <service.icon className="h-12 w-12 mb-2 text-primary" />
+                          {React.createElement(iconOptions[service.icon!], {className: "h-12 w-12 mb-2 text-primary" })}
                           <h3 className="font-semibold mb-1">{service.title}</h3>
                           <p className="text-sm text-muted-foreground">{service.description}</p>
                         </CardContent>
@@ -136,7 +143,7 @@ export function ProfilePageComponent({profile}: {profile:{ full_name: string, ti
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
-                          <service.icon className="h-6 w-6 text-primary" />
+                        {React.createElement(iconOptions[service.icon!], {className: "h-6 w-6 text-primary" })}
                           {service.title}
                         </DialogTitle>
                       </DialogHeader>
