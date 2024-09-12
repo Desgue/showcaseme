@@ -6,7 +6,7 @@ import { fetchServicesByUserId } from '~/lib/services/services'
 
 async function SlugProfilePage({params}: {params:{slug:string}}) {
     const profile = await fetchUserProfileBySlug(params.slug)
-    if (profile.slug === "") {
+    if (!profile.slug || profile.slug === "") {
         redirect("/")
     }
     const services = await fetchServicesByUserId(profile.id)

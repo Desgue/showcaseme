@@ -43,7 +43,7 @@ export async function updateUserSettingsAction(values: z.infer<typeof accountSet
             where: { id: data.user.id },
             data: {
                 full_name: `${values.firstName} ${values.lastName}`,
-                slug: values.slug,
+                slug: values.slug.replaceAll(" ", "-"),
                 email_notification: values.emailNotifications,
                 updated_at: new Date()
             },

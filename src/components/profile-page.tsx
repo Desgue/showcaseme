@@ -101,7 +101,7 @@ export function ProfilePageComponent({profile, services}: ProfilePageProps) {
           <Card>
             <CardContent className="mt-4 flex flex-col gap-1">
               <h2 className="text-xl font-semibold mb-2">Sobre Mim</h2>
-              {profile.bio.split("\n").map((p,idx) => <p key={idx} className="text-muted-foreground">{p}</p> )}
+              {profile.bio && profile.bio.split("\n").map((p,idx) => <p key={idx} className="text-muted-foreground">{p}</p> )}
             </CardContent>
           </Card>
         </TabsContent>
