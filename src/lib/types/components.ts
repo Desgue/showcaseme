@@ -48,6 +48,35 @@ export interface FeaturesSectionProps {
         };
     };
 }
+export interface ExpandedFeaturesSectionProps {
+    t: {
+        title: string;
+        target: {
+            icon: LucideIcon;
+            title: string;
+            description: string;
+            details: string;
+        };
+        seo: {
+            icon: LucideIcon;
+            title: string;
+            description: string;
+            details: string;
+        };
+        pricing: {
+            icon: LucideIcon;
+            title: string;
+            description: string;
+            details: string;
+        };
+        customization: {
+            icon: LucideIcon;
+            title: string;
+            description: string;
+            details: string;
+        };
+    };
+}
 
 export interface HowItWorksStep {
     icon: LucideIcon;
