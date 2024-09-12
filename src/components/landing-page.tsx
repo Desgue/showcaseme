@@ -1,138 +1,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Button } from "~/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "~/components/ui/accordion"
-import { Input } from "~/components/ui/input"
-import { Label } from "~/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
-import { User, CreditCard, Target, Globe, CheckCircle, Laptop, Palette, Rocket } from 'lucide-react'
-import { motion } from "framer-motion"
-import Image from 'next/image'
-import { RadioGroup, RadioGroupItem } from './ui/radio-group'
-import Link from 'next/link'
+import { User, CreditCard, Target, Globe, Laptop, Palette, Rocket } from 'lucide-react'
+import { Languages } from '~/lib/types/components'
+import { HeroSectionComponent } from './hero-section'
+import { FeaturesSectionComponent } from './features-section'
+import { NavbarComponent } from './navbar'
+import HowItWorksSection from './how-it-works-section'
+import { TestimonialsSectionComponent } from './testimonials-section'
+import { PricingSectionComponent } from './pricing-section'
+import { FaqSection } from './faq-section'
+import { FooterSectionComponent } from './footer-section'
 
-type Languages = 'en' | 'pt' | 'es'
 
-type HowItWorksStep = {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-  details: string;
-}
-// Update your translations type to include the new 'details' field
-type HowItWorksTranslation = {
-  title: string;
-  step1: HowItWorksStep;
-  step2: HowItWorksStep;
-  step3: HowItWorksStep;
-  step4: HowItWorksStep;
-}
-
-type ShowcaseMeContent = {
-  [key in Languages]: {
-    nav: {
-      features: string;
-      pricing: string;
-      login: string;
-      createAccount: string;
-    };
-    hero: {
-      title: string;
-      subtitle: string;
-      cta: string;
-    };
-    features: {
-      title: string;
-      target: {
-        title: string;
-        description: string;
-      };
-      seo: {
-        title: string;
-        description: string;
-      };
-      pricing: {
-        title: string;
-        description: string;
-      };
-      customization: {
-        title: string;
-        description: string;
-      };
-    };
-    howItWorks: {
-      title: string;
-      step1: HowItWorksStep;
-      step2: HowItWorksStep;
-      step3: HowItWorksStep;
-      step4: HowItWorksStep;
-    };
-    testimonials: {
-      title: string;
-      testimonial1: {
-        name: string;
-        role: string;
-        quote: string;
-      };
-      testimonial2: {
-        name: string;
-        role: string;
-        quote: string;
-      };
-      testimonial3: {
-        name: string;
-        role: string;
-        quote: string;
-      };
-    };
-    pricing: {
-      title: string;
-      subtitle: string;
-      cta: string;
-      features: string[];
-    };
-    faq: {
-      title: string;
-      question1: {
-        q: string;
-        a: string;
-      };
-      question2: {
-        q: string;
-        a: string;
-      };
-      question3: {
-        q: string;
-        a: string;
-      };
-      question4: {
-        q: string;
-        a: string;
-      };
-    };
-    footer: {
-      description: string;
-      quickLinks: string;
-      home: string;
-      contact: string;
-    };
-  };
-};
-const translations:ShowcaseMeContent = {
+// Keep the existing translations object
+const translations = {
   en: {
     nav: {
       features: "Features",
@@ -477,7 +359,6 @@ const translations:ShowcaseMeContent = {
 export function LandingPage() {
   const [showNavbar, setShowNavbar] = useState(false)
   const [language, setLanguage] = useState<Languages>('en')
-  const [contributionType, setContributionType] = useState('monthly')
   const t = translations[language]
 
   useEffect(() => {
@@ -485,7 +366,7 @@ export function LandingPage() {
       const heroElement = document.getElementById('hero')
       if(heroElement){
         const heroHeight = heroElement.offsetHeight
-        setShowNavbar(window.scrollY > heroHeight - 100)
+        setShowNavbar(window.scrollY > 150)
       }
     }
 
@@ -499,246 +380,26 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* Navbar */}
-      <nav className={`fixed top-0 left-0 right-0 bg-white z-50 transition-all duration-300 ${showNavbar ? 'opacity-100 shadow-md' : 'opacity-0 pointer-events-none'}`}>
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-black">Showcase Me</h1>
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" onClick={() => scrollTo("features")}>{t.nav.features}</Button>
-            <Button variant="ghost" onClick={() => scrollTo("pricing")}>{t.nav.pricing}</Button>
-            <Button variant="outline"><Link href={"/login"}>{t.nav.login}</Link></Button>
-            <Button className="bg-black text-white hover:bg-gray-800"><Link href={"/login"}>{t.nav.createAccount}</Link></Button>
-            <Select onValueChange={(v) => setLanguage(v as Languages)} defaultValue={language}>
-              <SelectTrigger className="w-[100px]">
-                <SelectValue placeholder="Language" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="pt">Português</SelectItem>
-                <SelectItem value="es">Español</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center bg-gray-50">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-          initial={{ opacity: 0, x: -200, }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{type:"spring", duration: 1 }}
-          className="space-y-6"
-            >
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 text-transparent bg-clip-text">
-              {t.hero.title}
-            </h1>
-            <p className="text-xl text-gray-700">{t.hero.subtitle}</p>
-            <Button size="lg" className="bg-black text-white hover:bg-gray-800"> <Link href={"/login"}>{t.hero.cta}</Link> </Button>
-          </motion.div>
-              <motion.div
-        initial={{ opacity: 0, y: 450 }}
-        animate={{ opacity: 1, y: 25 }}
-        transition={{ duration: 1 }}
-            className="relative hidden md:block"
-          >
-            <Image
-              src="/showcasememockmobile-portrait.png"
-              alt="Banner"
-              width={440}
-              height={192}
-              className="w-3/5 mx-auto" 
-            />
-            </motion.div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.features.title}</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { icon: Target, title: t.features.target.title, description: t.features.target.description },
-              { icon: Globe, title: t.features.seo.title, description: t.features.seo.description },
-              { icon: CreditCard, title: t.features.pricing.title, description: t.features.pricing.description },
-              { icon: User, title: t.features.customization.title, description: t.features.customization.description },
-            ].map((feature, index) => (
-              <Card key={index} className="border-gray-200">
-                <CardHeader>
-                  <feature.icon className="w-10 h-10 text-gray-600 mb-2" />
-                  <CardTitle className="text-gray-900">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
+      <NavbarComponent
+        t={t.nav} 
+        language={language} 
+        setLanguage={setLanguage} 
+        scrollTo={scrollTo} 
+        showNavbar={showNavbar}
+      />
+      <HeroSectionComponent t={t.hero} />
+      <FeaturesSectionComponent t={{
+        ...t.features,
+        target: { ...t.features.target, icon: Target },
+        seo: { ...t.features.seo, icon: Globe },
+        pricing: { ...t.features.pricing, icon: CreditCard },
+        customization: { ...t.features.customization, icon: User },
+      }} />
       <HowItWorksSection t={t.howItWorks} />
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.testimonials.title}</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[t.testimonials.testimonial1, t.testimonials.testimonial2, t.testimonials.testimonial3].map((testimonial, index) => (
-              <Card key={index} className="border-gray-200">
-                <CardHeader>
-                  <CardTitle className="text-gray-900">{testimonial.name}</CardTitle>
-                  <CardDescription className="text-gray-700">{testimonial.role}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-800 italic">&quot;{testimonial.quote}&quot;</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.pricing.title}</h2>
-          <Card className="max-w-md mx-auto border-gray-200">
-            <CardHeader>
-              <CardTitle className="text-gray-900">{t.pricing.title}</CardTitle>
-              <CardDescription className="text-gray-700">{t.pricing.subtitle}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <RadioGroup defaultValue="monthly" onValueChange={setContributionType}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="monthly" id="monthly" />
-                    <Label htmlFor="monthly">Monthly</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="onetime" id="onetime" />
-                    <Label htmlFor="onetime">One-time</Label>
-                  </div>
-                </RadioGroup>
-                <div className="space-y-2">
-                  <Label htmlFor="amount" className="text-gray-900">
-                    {contributionType === 'monthly' ? 'Monthly' : 'One-time'} Contribution
-                  </Label>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-2xl font-bold text-gray-900">$</span>
-                    <Input id="amount" type="number" placeholder="0" min="0" className="text-2xl text-gray-900" />
-                  </div>
-                </div>
-                <ul className="space-y-2">
-                  {t.pricing.features.map((feature: string, index: number) => (
-                    <li key={index} className="flex items-center space-x-2 text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-gray-600" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full bg-black text-white hover:bg-gray-800">{t.pricing.cta}</Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.faq.title}</h2>
-          <Accordion type="single" collapsible className="max-w-2xl mx-auto">
-            {[t.faq.question1, t.faq.question2, t.faq.question3, t.faq.question4].map((question, index) => (
-              <AccordionItem key={index} value={`item-${index + 1}`}>
-                <AccordionTrigger className="text-gray-900">{question.q}</AccordionTrigger>
-                <AccordionContent className="text-gray-700">
-                  {question.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Showcase Me</h3>
-              <p>{t.footer.description}</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">{t.footer.quickLinks}</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:underline">{t.footer.home}</a></li>
-                <li><a href="#features" className="hover:underline">{t.nav.features}</a></li>
-                <li><a href="#pricing" className="hover:underline">{t.nav.pricing}</a></li>
-                <li><a href="#faq" className="hover:underline">FAQ</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">{t.footer.contact}</h3>
-              <p>Email: support@showcaseme.com</p>
-              <p>Phone: (123) 456-7890</p>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-            <p>&copy; {new Date().getFullYear()} Showcase Me. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <TestimonialsSectionComponent t={t.testimonials} />
+      <PricingSectionComponent t={t.pricing} />
+      <FaqSection t={t.faq} />
+      <FooterSectionComponent t={t.footer} />
     </div>
   )
-}
-
-
-
-
-const HowItWorksSection: React.FC<{ t: HowItWorksTranslation }> = ({ t }) => {
-  const steps: HowItWorksStep[] = [t.step1, t.step2, t.step3, t.step4]
-
-  return (
-    <section id="how-it-works" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.title}</h2>
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="md:absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gray-200" />
-          
-          {steps.map((step, index) => (
-            <motion.div
-              key={index}
-              className="relative mb-16 flex items-center gap-4"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.7, delay: index * 0.2 }}
-            >
-              <div 
-                className={`w-full md:w-5/12 ${
-                  index % 2 === 0 
-                    ? 'md:pr-8 md:text-right' 
-                    : 'md:ml-auto md:pl-8 md:text-left'
-                } mb-8 md:mb-0`}
-                >
-                <h3 className="text-2xl font-semibold mb-2 text-gray-900 max-md:flex max-md:gap-4"> <step.icon className="md:hidden w-8 h-8  text-gray-600" />{step.title} </h3>
-                <p className="text-gray-600 mb-2">{step.description}</p>
-                <p className="text-gray-700">{step.details}</p>
-              </div>
-              <div className="hidden md:absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full border-4 border-gray-200 md:flex items-center justify-center">
-                <step.icon className="w-6 h-6 text-gray-600" />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+    }
