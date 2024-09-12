@@ -18,7 +18,7 @@ export async function fetchUserProfileById(id: string): Promise<UserProfile> {
         })
         if (result) {
             const profile = {
-                id: result.id!,
+                id: result.id,
                 full_name: result.full_name!,
                 title: result.title!,
                 bio: result.bio!,
@@ -49,7 +49,7 @@ export async function fetchUserProfileBySlug(slug: string): Promise<UserProfile>
         })
         if (result) {
             const profile = {
-                id: result.id!,
+                id: result.id,
                 full_name: result.full_name!,
                 title: result.title!,
                 bio: result.bio!,
