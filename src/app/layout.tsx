@@ -1,14 +1,12 @@
 import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
-import { type Metadata } from "next";
+import { metadata } from "./metadata";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
-export const metadata: Metadata = {
-  title: "Showcase Me",
-  description: "Reach your ideal clients with a tailored, professional online presence.",
-};
+export{metadata}
+
 
 export default function RootLayout({
   children,
