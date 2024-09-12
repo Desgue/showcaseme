@@ -1,21 +1,20 @@
 "use server"
-import { z } from 'zod'
+import type { z } from 'zod'
 import { createClient } from '~/utils/supabase/server';
 import type { accountSettingsFormSchema, updateProfileSchema } from '~/lib/types/profiles'
 import { prisma } from '~/lib/utils';
-import { NextResponse } from 'next/server';
 
 
 
-export async function updateProfileAction(values: z.infer<typeof updateProfileSchema>): Promise<NextResponse> {
+export async function updateProfileAction(values: z.infer<typeof updateProfileSchema>) {
     try {
         const supabase = createClient();
         const { data, error } = await supabase.auth.getUser();
         if (error || !data?.user) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+            return { message: "unhautorized" };
         }
 
-        const updatedProfile = await prisma.profiles.update({
+        await prisma.profiles.update({
             where: { id: data.user.id },
             data: {
                 full_name: values.full_name,
@@ -25,10 +24,10 @@ export async function updateProfileAction(values: z.infer<typeof updateProfileSc
             },
         });
 
-        return NextResponse.json({ success: true });
+        return { message: "success" }
     } catch (error) {
         console.error("Profile update error:", error);
-        return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });
+        return { message: "failed to update profile" }
     }
 }
 
@@ -37,10 +36,10 @@ export async function updateUserSettingsAction(values: z.infer<typeof accountSet
         const supabase = createClient();
         const { data, error } = await supabase.auth.getUser();
         if (error || !data?.user) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+            return { message: "unhautorized" };
         }
 
-        const updatedProfile = await prisma.profiles.update({
+        await prisma.profiles.update({
             where: { id: data.user.id },
             data: {
                 full_name: `${values.firstName} ${values.lastName}`,
@@ -50,11 +49,9 @@ export async function updateUserSettingsAction(values: z.infer<typeof accountSet
             },
         });
 
-        return NextResponse.json({
-            success: true,
-        });
+        return { message: "success" }
     } catch (error) {
         console.error("User settings update error:", error);
-        return NextResponse.json({ error: "Failed to update user settings" }, { status: 500 });
+        return { message: "failed" };
     }
 }

@@ -10,10 +10,10 @@ export async function googlelogin() {
     const host = h.get('host')
     const protocol = h.get('x-forwarded-proto') ?? 'http'
     const fullUrl = `${protocol}://${host}`
-
     const redirectUrl = new URL(fullUrl)
     redirectUrl.pathname += 'auth/callback'
     redirectUrl.searchParams.set("next", LoginRedirectPath)
+    console.log("Redirect url after google auth", redirectUrl)
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -27,4 +27,10 @@ export async function googlelogin() {
     if (data.url) {
         redirect(data.url) // use the redirect API for your server framework
     }
+}
+
+export async function signOut() {
+    const supabase = createClient()
+    const { error } = await supabase.auth.signOut()
+
 }

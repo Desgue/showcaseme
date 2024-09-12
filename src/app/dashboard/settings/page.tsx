@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import AccountSettings from '~/components/account-settings'
 import { createClient } from '~/utils/supabase/server'
 import { redirect } from 'next/navigation'
@@ -15,6 +14,7 @@ const AccountSettingsPage: React.FC = async () => {
   const supabase = createClient();
     const { data, error } = await supabase.auth.getUser();
     if (error || !data?.user) {
+      console.error("error fetching user from supabase inside page: ",error)
         redirect("/login");
     }
     const profile = await fetchUserProfileById(data.user.id)

@@ -9,14 +9,12 @@ import { Textarea } from "~/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "~/components/ui/dialog"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group"
-import { Switch } from "~/components/ui/switch"
 import { motion } from 'framer-motion'
-import { Briefcase, PlusCircle, Trash2 } from 'lucide-react'
+import {  PlusCircle, Trash2 } from 'lucide-react'
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -29,6 +27,7 @@ import { updateProfileSchema } from '~/lib/types/profiles'
 import { updateProfileAction } from '~/actions/data-mutation/profiles'
 import {  IconLabel, Service, createServiceSchema, iconOptions } from '~/lib/types/services'
 import { createServiceAction, deleteServiceAction } from '~/actions/data-mutation/services'
+import { useToast } from '~/hooks/use-toast'
 
 
 
@@ -56,6 +55,8 @@ type CustomizePageProps = {
 }
 
 const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) => {
+  const {toast} = useToast()
+  const [isLoading,setIsLoading] = useState(false)
   const [services, setServices] = useState<Service[]>(props.services)
   const [newService, setNewService] = useState<Service>({id:0, title: '', description: '',details: "", icon: "Briefcase" })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -94,8 +95,32 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
     },
   })
 
-  function profileFormSubmit(values: z.infer<typeof updateProfileSchema>) {
-    updateProfileAction(values).catch(e=>console.error(e))
+  async function profileFormSubmit(values: z.infer<typeof updateProfileSchema>) {
+    setIsLoading(true)
+    try {
+      const response = await updateProfileAction(values)
+      if (response.message === "success"){
+        setIsLoading(false)
+          toast({
+            title: "Profile updated",
+            description: "Your account profile information have been updated successfully.",
+          })
+      }else {
+        // Handle HTTP errors
+          console.error("Failed to update profile: ", response.message);
+          // Show error message to the user
+          toast({
+            title: "Uh oh! Something went wrong :(",
+            description: "Please try again shortly",
+          })   
+      }
+    }catch (e) {
+      console.error("Failed to update profile: ", e);
+      toast({
+        title: "Uh oh! Something went wrong :(",
+        description: "Please try again shortly",
+      })   
+    }
   }
 
   const servicesForm = useForm<z.infer<typeof createServiceSchema>>({
@@ -107,10 +132,34 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
     },
   })
 
-  function ServicesFormSubmit(values: z.infer<typeof createServiceSchema> ){
-    console.log("ss")
-    handleAddService()
-    createServiceAction(values).catch(e=>console.error(e))
+  async function ServicesFormSubmit(values: z.infer<typeof createServiceSchema> ){
+    setIsLoading(true)
+    try {
+      const response = await createServiceAction(values)
+      if (response.message === "success"){
+        setIsLoading(false)
+          toast({
+            title: "Profile updated",
+            description: "Your service has been created successfully.",
+          })
+          handleAddService()
+      }else {
+          console.error("Failed to create service: ", response.message);
+          toast({
+            title: "Uh oh! Something went wrong :(",
+            description: "Please try again shortly",
+          })   
+      }
+    }catch (e) {
+      console.error("Failed to create service: ", e);
+      toast({
+        title: "Uh oh! Something went wrong :(",
+        description: "Please try again shortly",
+      })   
+    }
+    
+    
+    
   }
 
 
@@ -209,7 +258,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
                    />
             </CardContent>
             <CardFooter className='flex justify-end'>
-              <Button type='submit'>Confirm</Button>
+              <Button disabled={isLoading} type='submit'>Confirm</Button>
             </CardFooter>
               </form>
             </Form>
@@ -321,7 +370,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
 
                   </div>
                   <DialogFooter className='w-full mt-4'>
-                    <Button>Add Service</Button>
+                    <Button type="submit" disabled={isLoading}> Add Service</Button>
                   </DialogFooter>
               </form>
             </Form>  

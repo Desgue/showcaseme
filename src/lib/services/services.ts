@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client"
-import { Service, iconOptions, isOfTypeIconLabel } from "../types/services"
+import { Service, isOfTypeIconLabel } from "../types/services"
 import { prisma } from "../utils"
 
 

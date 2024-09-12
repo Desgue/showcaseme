@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import React from 'react'
 import CustomizePageComponent from '~/components/customize-profile'
@@ -15,7 +15,8 @@ const CustomizePage = async () => {
   const supabase = createClient();
     const { data, error } = await supabase.auth.getUser();
     if (error || !data?.user) {
-        redirect("/login");
+      console.error("error fetching user from supabase inside page: ",error)
+      redirect("/login");
     }
     const profile = await fetchUserProfileById(data.user.id)
     const services = await fetchServicesByUserId(data.user.id)

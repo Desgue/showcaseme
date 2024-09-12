@@ -1,19 +1,18 @@
 "use server"
-import { z } from 'zod'
+import type { z } from 'zod'
 import { createClient } from '~/utils/supabase/server';
-import { createServiceSchema, iconOptions } from '~/lib/types/services';
+import type { createServiceSchema } from '~/lib/types/services';
 import { prisma } from '~/lib/utils';
-import { NextResponse } from 'next/server';
 
 export async function createServiceAction(values: z.infer<typeof createServiceSchema>) {
     try {
         const supabase = createClient();
         const { data, error } = await supabase.auth.getUser();
         if (error || !data?.user) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+            return { message: "unhautorized" };
         }
 
-        const newService = await prisma.services.create({
+        await prisma.services.create({
             data: {
                 profile_id: data.user.id,
                 title: values.title,
@@ -24,13 +23,10 @@ export async function createServiceAction(values: z.infer<typeof createServiceSc
             },
         });
 
-        return NextResponse.json({
-            success: true,
-            service: newService
-        });
+        return { message: "success" }
     } catch (error) {
         console.error("Service creation error:", error);
-        return NextResponse.json({ error: "Failed to create service" }, { status: 500 });
+        return { message: "Failed to create service" }
     }
 }
 
@@ -39,19 +35,16 @@ export async function deleteServiceAction(id: number) {
         const supabase = createClient();
         const { data, error } = await supabase.auth.getUser();
         if (error || !data?.user) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+            return { message: "unauthorized" }
         }
 
-        const deletedService = await prisma.services.delete({
+        await prisma.services.delete({
             where: { id: BigInt(id) }
         });
 
-        return NextResponse.json({
-            success: true,
-            deletedService: deletedService
-        });
+        return { message: "success" }
     } catch (error) {
         console.error("Service deletion error:", error);
-        return NextResponse.json({ error: "Failed to delete service" }, { status: 500 });
+        return { message: "Failed to delete service" }
     }
 }

@@ -3,7 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { Card, CardContent } from "~/components/ui/card"
 import { Button } from "~/components/ui/button"
-import { InstagramIcon, FacebookIcon, TwitterIcon, Code2Icon, ServerIcon, Users } from "lucide-react"
+import { ServerIcon, Users } from "lucide-react"
 import Image from "next/image"
 import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon,  CodeIcon, MixerHorizontalIcon, LayersIcon   } from "@radix-ui/react-icons"
 import Link from "next/link"

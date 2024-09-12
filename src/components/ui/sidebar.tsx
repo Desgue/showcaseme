@@ -8,6 +8,7 @@ import { cn } from "~/lib/utils";
 interface Links {
   label: string;
   href: string;
+  onClick?: () => void
   icon: React.JSX.Element | React.ReactNode;
 }
 
@@ -158,15 +159,18 @@ export const MobileSidebar = ({
 export const SidebarLink = ({
   link,
   className,
+  onClick,
   ...props
 }: {
   link: Links;
   className?: string;
   props?: LinkProps;
+  onClick?: () => void;
 }) => {
   const { open, animate } = useSidebar();
   return (
     <Link
+      onClick={onClick}
       href={link.href}
       className={cn(
         "flex items-center justify-start gap-2  group/sidebar py-2",
