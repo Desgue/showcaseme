@@ -12,11 +12,12 @@ import { Separator } from "~/components/ui/separator"
 import { toast } from '~/hooks/use-toast'
 import { UserProfile, accountSettingsFormSchema } from '~/lib/types/profiles'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
-import { updateUserSettingsAction } from '~/actions/data-mutation/profiles'
+import {  updateUserSettingsAction } from '~/actions/data-mutation/profiles'
+import { isActionResponse } from '~/lib/types/api'
 
 
 
-type FormData = z.infer<typeof accountSettingsFormSchema>
+
 
 const AccountSettings = ({profile}: {profile: UserProfile}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -32,23 +33,41 @@ const AccountSettings = ({profile}: {profile: UserProfile}) => {
 
   const onSubmit = async (values: z.infer<typeof accountSettingsFormSchema>) => {
     setIsLoading(true)
-    // Simulate API call
-    try{
-      await updateUserSettingsAction(values)
-      setIsLoading(false)
-      toast({
-        title: "Settings updated",
-        description: "Your account settings have been updated successfully.",
-      })
-
-    }catch(e){
-      toast({
-        title: "Uh oh! Something went wrong :(",
-        description: "Please try again shortly",
-      })
-    }
-    console.log(values)
+    // API call
+    try {
+      const response = await updateUserSettingsAction(values);
+      if (response.ok) {
+          const result = await response.json();
+          
+          if (isActionResponse(result) && result.success) {
+              // Handle successful update
+              setIsLoading(false)
+              toast({
+                title: "Settings updated",
+                description: "Your account settings have been updated successfully.",
+              })
+          } else {
+              // Handle unexpected success response
+              console.error("Unexpected response:", result);
+          }
+      } else {
+          // Handle HTTP errors
+          const errorData = await response.json();
+          if(isActionResponse(errorData)){
+            console.error("Failed to update settings:", errorData.error as unknown);
+            // Show error message to the user
+            toast({
+              title: "Uh oh! Something went wrong :(",
+              description: "Please try again shortly",
+            })
+          }
+      }
+  } catch (error) {
+      console.error("Error calling updateUserSettingsAction:", error);
+      // Handle any network or other errors
   }
+
+}
 
   return (
     <div className="container mx-auto py-10">
