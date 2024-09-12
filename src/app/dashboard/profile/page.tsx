@@ -4,7 +4,7 @@ import React from 'react'
 import CustomizePageComponent from '~/components/customize-profile'
 import { fetchUserProfileById } from '~/lib/services/profiles';
 import { fetchServicesByUserId } from '~/lib/services/services';
-import { fetchSocialPlatforms } from '~/lib/services/socials';
+import { fetchSocialPlatforms, fetchUserSocials } from '~/lib/services/socials';
 import { createClient } from '~/utils/supabase/server';
 
 export const metadata: Metadata = {
@@ -22,9 +22,10 @@ const CustomizePage = async () => {
     const profile = await fetchUserProfileById(data.user.id)
     const services = await fetchServicesByUserId(data.user.id)
     const socialPlatforms = await fetchSocialPlatforms()
+    const userSocials = await fetchUserSocials(data.user.id)
   return (
     <main className=''>
-      <CustomizePageComponent props={{profile, services, socialPlatforms}}/>
+      <CustomizePageComponent props={{profile, services, socialPlatforms, userSocials}}/>
     </main>
   )
 }

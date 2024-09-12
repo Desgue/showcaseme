@@ -23,20 +23,15 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { updateProfileSchema } from '~/lib/types/profiles'
+import { UserProfile, updateProfileSchema } from '~/lib/types/profiles'
 import { updateProfileAction } from '~/actions/data-mutation/profiles'
 import {  IconLabel, Service, createServiceSchema, iconOptions } from '~/lib/types/services'
 import { createServiceAction, deleteServiceAction } from '~/actions/data-mutation/services'
 import { useToast } from '~/hooks/use-toast'
-import { SocialPlatforms } from '~/lib/types/socials'
+import { SocialPlatforms, UserSocialMedias, createSocialSchema } from '~/lib/types/socials'
+import { createUserSocial } from '~/actions/data-mutation/socials'
+import Icon from './ui/lucide-icons'
 
-
-
-
-type Social = {
-  platform: string;
-  url: string;
-}
 
 type MiscSection = {
   type: 'text' | 'list';
@@ -47,13 +42,10 @@ type MiscSection = {
 ] */
 
 type CustomizePageProps = {
-  profile: {
-    full_name: string
-    title: string
-    bio: string
-  }
+  profile: Exclude<UserProfile, "id">
   services: Service[]
   socialPlatforms: SocialPlatforms[]
+  userSocials: UserSocialMedias[]
 }
 
 const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) => {
@@ -62,7 +54,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
   const [services, setServices] = useState<Service[]>(props.services)
   const [newService, setNewService] = useState<Service>({id:0, title: '', description: '',details: "", icon: "Briefcase" })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  
+  console.log(props.userSocials)
   const handleAddService = () => {
     setServices([...services, newService])
     setNewService({id:0, title: '', description: '', details: "",icon: "Briefcase" })
@@ -74,14 +66,43 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
     deleteServiceAction(id).catch(e => console.error(e))
   }
 
-  const [socials, setSocials] = useState<Social[]>([])
-  const [newSocial, setNewSocial] = useState<Social>({ platform: '', url: '' })
+  const [socials, setSocials] = useState<UserSocialMedias[]>(props.userSocials)
+  const [newSocial, setNewSocial] = useState<UserSocialMedias>()
 
   /* const [miscSection, setMiscSection] = useState<MiscSection>({ type: 'text', content: '' }) */
 
-  const handleAddSocial = () => {
-    setSocials([...socials, newSocial])
-    setNewSocial({ platform: '', url: '' })
+  const socialsForm = useForm<z.infer<typeof createSocialSchema>>({
+    resolver: zodResolver(createSocialSchema),
+    
+  })
+  async function socialFormSubmit(values: z.infer<typeof createSocialSchema> ) {
+    setIsLoading(true)
+    try {
+      setSocials([...socials, newSocial!])
+      setNewSocial(undefined)
+      const response = await createUserSocial(values)
+      if (response.message === "success"){
+        setIsLoading(false)
+          toast({
+            title: "Socials updated",
+            description: "Your account social media information have been updated successfully.",
+          })
+      }else {
+        // Handle HTTP errors
+          console.error("Failed to update social media: ", response.message);
+          // Show error message to the user
+          toast({
+            title: "Uh oh! Something went wrong :(",
+            description: "Please try again shortly",
+          })   
+      }
+    }catch (e) {
+      console.error("Failed to update profile: ", e);
+      toast({
+        title: "Uh oh! Something went wrong :(",
+        description: "Please try again shortly",
+      })   
+    }
   }
 
   const handleRemoveSocial = (index: number) => {
@@ -389,52 +410,83 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
               <CardTitle>Social Media Links</CardTitle>
             </CardHeader>
             <CardContent>
+
               <div className="space-y-4">
                 {socials.map((social, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <span>{social.platform}</span>
-                    <span>{social.url}</span>
-                    <Button variant="destructive" size="icon" onClick={() => handleRemoveSocial(index)}>
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
+                  <div key={index} className="flex items-center space-x-2 justify-between">
+                    <div className='flex gap-4'>
+                  <span><Icon name={social.platform }  className='h-6 w-6'/></span>
+                  <span className='text-muted-foreground text-md'>{social.url}</span>
+                      </div>
+                  <Button variant="destructive" size="icon"  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
                 ))}
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button><PlusCircle className="w-4 h-4 mr-2" /> Add Social Link</Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New Social Link</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="socialPlatform">Platform</Label>
-                        <Select onValueChange={(value) => setNewSocial({...newSocial, platform: value})}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a platform" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {props.socialPlatforms.map((platform) => (
-                              <SelectItem key={platform.id} value={platform.name}>
-                                {platform.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                    <Form {...socialsForm} >
+                      <form onSubmit={socialsForm.handleSubmit(socialFormSubmit)}>
+
+                      <DialogHeader>
+                        <DialogTitle>Add New Social Link</DialogTitle>
+                      </DialogHeader>
+                      <div className='space-y-6'>
+
+                  
+                      <FormField
+                         control={socialsForm.control}
+                         name="social_media_id"
+                         render={({ field }) => (
+                           <FormItem className="space-y-2">
+                             <FormLabel>Social Medias</FormLabel>
+                              <Select onValueChange={(value) => {field.onChange(value); setNewSocial({...newSocial!, social_media_id:0})}}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a Social Media Platform" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {props.socialPlatforms.map((platform) => (
+                                    <SelectItem key={platform.id} value={platform.id.toString()} className='w-full' >
+                                      <div className='flex w-full gap-4'>
+                                      <Icon name={platform.name }  className='h-4 w-4'/>
+                                      {platform.name}
+                                      </div>
+                                    </SelectItem>
+                                  ))}
+                                 </SelectContent>
+                              </Select>
+                             <FormMessage />
+                           </FormItem>
+                         )}/>
+                         <FormField
+                           control={socialsForm.control}
+                           name="url"
+                           render={({ field }) => (
+                             <FormItem>
+                               <FormLabel>Social Media Url</FormLabel>
+                               <FormControl>
+                                <Input 
+                                   id="socialUrl"
+                                   value={field.value}
+                                   onChange={(e) => {field.onChange(e); setNewSocial({...newSocial!, url: e.target.value})}}
+                                 />
+                               </FormControl>
+                               <FormMessage />
+                             </FormItem>
+                           )}
+                         />                       
+                             
+                      <DialogFooter>
+                        <Button type="submit" className='w-full'>Add Social Link</Button>
+                      </DialogFooter>
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="socialUrl">URL</Label>
-                        <Input 
-                          id="socialUrl"
-                          value={newSocial.url}
-                          onChange={(e) => setNewSocial({...newSocial, url: e.target.value})}
-                        />
-                      </div>
-                    </div>
-                    <DialogFooter>
-                      <Button onClick={handleAddSocial}>Add Social Link</Button>
-                    </DialogFooter>
+                            </form>
+                      </Form>
                   </DialogContent>
                 </Dialog>
               </div>

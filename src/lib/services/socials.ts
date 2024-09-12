@@ -5,7 +5,7 @@ import dynamicIconImports from 'lucide-react/dynamicIconImports';
 export async function fetchSocialPlatforms(): Promise<SocialPlatforms[]> {
     try {
         const result = await prisma.social_medias.findMany({})
-        return result.map(s => ({ id: Number(s.id), name: s.name! }))
+        return result.map(s => ({ id: Number(s.id), name: s.name.toLowerCase() as keyof typeof dynamicIconImports }))
     } catch (e) {
         console.log(e)
         return []
@@ -13,6 +13,7 @@ export async function fetchSocialPlatforms(): Promise<SocialPlatforms[]> {
 }
 export async function fetchUserSocials(id: string): Promise<UserSocialMedias[]> {
     try {
+
         const result = await prisma.profile_socials.findMany({
             where: {
                 profile_id: id
