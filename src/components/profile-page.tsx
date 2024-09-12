@@ -12,8 +12,10 @@ import { DialogTrigger } from "@radix-ui/react-dialog"
 import { UserProfile } from "~/lib/types/profiles"
 import { Service, iconOptions } from "~/lib/types/services"
 import React from "react"
+import Icon from "./ui/lucide-icons"
+import { UserSocialMedias } from "~/lib/types/socials"
 
-const services = [
+/* const services = [
   {
     icon: ServerIcon,
     title: "Desenvolvimento de APIs Backend",
@@ -39,13 +41,14 @@ const services = [
     details: "Ofereço insights valiosos em todas as fases do ciclo de vida do desenvolvimento de software. Auxilio na definição de arquiteturas escaláveis, seleção de tecnologias apropriadas, implementação de melhores práticas de desenvolvimento e otimização de processos. Meu objetivo é garantir que sua equipe esteja equipada para entregar software de alta qualidade de forma eficiente e sustentável."
   },
 
-]
+] */
 
 type ProfilePageProps = {
   profile: UserProfile
   services: Service[]
+  socials: UserSocialMedias[]
 }
-export function ProfilePageComponent({profile, services}: ProfilePageProps) {
+export function ProfilePageComponent({profile, services, socials}: ProfilePageProps) {
   return (
     <div className="w-full max-w-5xl mx-auto">
       {/* Banner */}
@@ -78,15 +81,12 @@ export function ProfilePageComponent({profile, services}: ProfilePageProps) {
 
       {/* Social Media Links */}
       <div className="flex justify-center space-x-4 mb-6">
-        <Button variant="ghost" size="icon">
-          <Link href={"/"}><InstagramLogoIcon className="h-5 w-5" /></Link>
-        </Button>
-        <Button variant="ghost" size="icon">
-          <LinkedInLogoIcon className="h-5 w-5" />
-        </Button>
-        <Button variant="ghost" size="icon">
-          <GitHubLogoIcon className="h-5 w-5" />
-        </Button>
+        {socials.map(s => (
+            <Button key={s.id} variant="ghost" size="icon">
+            <Link href={s.url}><Icon name={s.platform} className="h-5 w-5" /></Link>
+          </Button>
+        ))}
+
       </div>
 
       {/* Tabs */}
@@ -101,7 +101,7 @@ export function ProfilePageComponent({profile, services}: ProfilePageProps) {
           <Card>
             <CardContent className="mt-4 flex flex-col gap-1">
               <h2 className="text-xl font-semibold mb-2">Sobre Mim</h2>
-              {profile.bio && profile.bio.split("\n").map((p,idx) => <p key={idx} className="text-muted-foreground">{p}</p> )}
+              {profile.bio?.split("\n").map((p,idx) => <p key={idx} className="text-muted-foreground">{p}</p> )}
             </CardContent>
           </Card>
         </TabsContent>

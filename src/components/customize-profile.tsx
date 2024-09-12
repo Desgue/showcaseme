@@ -28,6 +28,7 @@ import { updateProfileAction } from '~/actions/data-mutation/profiles'
 import {  IconLabel, Service, createServiceSchema, iconOptions } from '~/lib/types/services'
 import { createServiceAction, deleteServiceAction } from '~/actions/data-mutation/services'
 import { useToast } from '~/hooks/use-toast'
+import { SocialPlatforms } from '~/lib/types/socials'
 
 
 
@@ -41,9 +42,9 @@ type MiscSection = {
   type: 'text' | 'list';
   content: string | string[];
 }
-const socialPlatforms = [
+/* const socialPlatforms = [
   'Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'GitHub', 'YouTube', 'TikTok', 'Pinterest', 'Snapchat'
-]
+] */
 
 type CustomizePageProps = {
   profile: {
@@ -52,6 +53,7 @@ type CustomizePageProps = {
     bio: string
   }
   services: Service[]
+  socialPlatforms: SocialPlatforms[]
 }
 
 const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) => {
@@ -74,6 +76,7 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
 
   const [socials, setSocials] = useState<Social[]>([])
   const [newSocial, setNewSocial] = useState<Social>({ platform: '', url: '' })
+
   /* const [miscSection, setMiscSection] = useState<MiscSection>({ type: 'text', content: '' }) */
 
   const handleAddSocial = () => {
@@ -84,7 +87,6 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
   const handleRemoveSocial = (index: number) => {
     setSocials(socials.filter((_, i) => i !== index))
   }
-
 
   const profileForm = useForm<z.infer<typeof updateProfileSchema>>({
     resolver: zodResolver(updateProfileSchema),
@@ -413,9 +415,9 @@ const CustomizePageComponent: React.FC<{props: CustomizePageProps}> = ({props}) 
                             <SelectValue placeholder="Select a platform" />
                           </SelectTrigger>
                           <SelectContent>
-                            {socialPlatforms.map((platform) => (
-                              <SelectItem key={platform} value={platform}>
-                                {platform}
+                            {props.socialPlatforms.map((platform) => (
+                              <SelectItem key={platform.id} value={platform.name}>
+                                {platform.name}
                               </SelectItem>
                             ))}
                           </SelectContent>
