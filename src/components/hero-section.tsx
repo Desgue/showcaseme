@@ -8,7 +8,7 @@ import { HeroSectionProps } from "~/lib/types/components"
 
 export function HeroSectionComponent({ t }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden  bg-gradient-to-b from-white via-gray-50 to-gray-100  pt-16 pb-32 sm:pt-24 sm:pb-40">
+    <section className="h-screen flex items-center justify-center relative overflow-hidden  bg-gradient-to-b from-white via-gray-50 to-gray-100  pt-16 pb-32 sm:pt-24 sm:pb-40">
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
           <motion.div 
@@ -17,11 +17,11 @@ export function HeroSectionComponent({ t }: HeroSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-          <h1 className="text-3xl tracking-tight font-extrabold bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 text-transparent bg-clip-text sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl tracking-tight font-extrabold bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 text-transparent bg-clip-text sm:text-5xl md:text-6xl">
               <span className="block xl:inline">{t.title.split(' ').slice(0, -1).join(' ')}</span>{' '}
               <span className="block text-[#FF6B6B] xl:inline">{t.title.split(' ').slice(-1)}</span>
             </h1>
-          <p className="text-xl lg:text-2xl text-gray-700 my-4">{t.subtitle}</p>
+          <p className="text-2xl text-gray-700 my-4">{t.subtitle}</p>
           <Button size="lg" className="bg-[#FF6B6B] text-white font-bold hover:bg-[#f05757]">
             <Link href="/login">{t.cta}</Link>
           </Button>
@@ -51,7 +51,7 @@ export function HeroSectionComponent({ t }: HeroSectionProps) {
                     alt="Showcase Me App"
                     width={440}
                     height={792}
-                    className="w-3/5 md:w-4/5 mx-auto"
+                    className="max-md:hidden w-3/5 md:w-4/5 mx-auto"
                   />
                 </motion.div>
               </div>
