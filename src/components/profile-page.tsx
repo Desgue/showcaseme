@@ -65,7 +65,7 @@ export function ProfilePageComponent({profile, services, socials}: ProfilePagePr
       {/* Avatar */}
       <div className="relative -mt-20 mb-4 flex justify-center">
         <Image
-          src="/avatar.png"
+          src={profile.avatar_url}
           alt="Avatar"
           width={180}
           height={180}

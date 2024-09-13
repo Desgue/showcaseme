@@ -5,6 +5,7 @@ import { prisma } from "../utils";
 export async function fetchUserProfileById(id: string): Promise<UserProfile> {
     const emptyRes = {
         id: "",
+        avatar_url: "",
         full_name: "",
         title: "",
         bio: "",
@@ -19,6 +20,7 @@ export async function fetchUserProfileById(id: string): Promise<UserProfile> {
         if (result) {
             const profile = {
                 id: result.id,
+                avatar_url: result.avatar_url!,
                 full_name: result.full_name!,
                 title: result.title!,
                 bio: result.bio!,
@@ -36,6 +38,7 @@ export async function fetchUserProfileById(id: string): Promise<UserProfile> {
 export async function fetchUserProfileBySlug(slug: string): Promise<UserProfile> {
     const emptyRes = {
         id: "",
+        avatar_url: "",
         full_name: "",
         title: "",
         bio: "",
@@ -50,6 +53,7 @@ export async function fetchUserProfileBySlug(slug: string): Promise<UserProfile>
         if (result) {
             const profile = {
                 id: result.id,
+                avatar_url: result.avatar_url!,
                 full_name: result.full_name!,
                 title: result.title!,
                 bio: result.bio!,

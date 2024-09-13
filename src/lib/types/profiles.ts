@@ -13,4 +13,4 @@ export const accountSettingsFormSchema = z.object({
     emailNotifications: z.boolean(),
 })
 
-export type UserProfile = { id: string, full_name: string, title: string, bio: string, slug: string }
+export type UserProfile = { id: string, avatar_url: string, full_name: string, title: string, bio: string, slug: string }
