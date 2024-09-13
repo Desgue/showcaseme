@@ -77,12 +77,14 @@ export default function ExpandedFeaturesSection({ t }: ExpandedFeaturesSectionPr
     <section id="features" className="py-20 bg-gradient-to-b from-gray-100 via-gray-100 to-white ">
       <div className="container mx-auto px-4">
         <motion.h2 
-          className="text-4xl font-bold text-center mb-12 text-[#1A2A3A]"
+          className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-transparent bg-clip-text"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {t.title}
+          {t.title.split(" ").splice(0, t.title.split(" ").indexOf("Me")).join(" ")} {" "}
+          <span className="text-[#FF6B6B] ">{t.title.split(" ")[t.title.split(" ").indexOf("Me")]} {" "}</span>
+          {t.title.split(" ").splice(t.title.split(" ").indexOf("Me") +1).join(" ")} {" "}
         </motion.h2>
         <div className=" grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {features.map((feature, index) => (

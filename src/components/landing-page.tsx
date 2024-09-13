@@ -393,11 +393,7 @@ export function LandingPage() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const heroElement = document.getElementById('hero')
-      if(heroElement){
-        const heroHeight = heroElement.offsetHeight
-        setShowNavbar(window.scrollY > 150)
-      }
+        setShowNavbar(window.scrollY > 250)
     }
 
     window.addEventListener('scroll', handleScroll)
