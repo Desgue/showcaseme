@@ -11,7 +11,7 @@ export function FooterSectionComponent({ t }: FooterSectionProps) {
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-16">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-12">
+        <div className="grid xl:grid-cols-4 gap-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export function FooterSectionComponent({ t }: FooterSectionProps) {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-grow px-4 py-2  text-black placeholder-black rounded-l-md focus:outline-none "
+                className="max-sm:w-3/4 flex-grow px-4 py-2  text-black placeholder-black rounded-l-md focus:outline-none "
               />
               <button
                 type="submit"
