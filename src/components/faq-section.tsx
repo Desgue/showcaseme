@@ -5,7 +5,7 @@ import { FAQSectionProps } from "~/lib/types/components"
 
 export function FaqSection({ t }: FAQSectionProps) {
   return (
-    <section id="faq" className="py-20 bg-white">
+    <section id="faq" className="py-20 bg-gradient-to-b from-white via-gray-50 to-gray-100">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.title}</h2>
         <Accordion type="single" collapsible className="max-w-2xl mx-auto">

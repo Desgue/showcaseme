@@ -8,7 +8,7 @@ const HowItWorksSection: React.FC<{ t: HowItWorksTranslations }> = ({ t }) => {
   const steps: HowItWorksStepTranslations[] = [t.step1, t.step2, t.step3, t.step4]
 
   return (
-    <section id="how-it-works" className="py-20 bg-gray-50">
+    <section id="how-it-works" className="py-20 bg-gradient-to-b from-white via-gray-50 to-gray-100">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.title}</h2>
         <div className="relative">

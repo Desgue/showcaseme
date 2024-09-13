@@ -29,11 +29,11 @@ const FeatureCard = ({ feature, isSelected, onClick }: FeatureCardProps) => (
     transition={{ duration: 0.5 }}
   >
     <Card 
-      className={`cursor-pointer transition-all duration-300 ${isSelected ? 'border-primary shadow-lg' : 'border-gray-200'}`}
+      className={`cursor-pointer transition-all duration-300 ${isSelected ? 'border-[#00a3a396] shadow-lg' : 'border-gray-200'}`}
       onClick={onClick}
     >
       <CardHeader>
-        <feature.icon className={`w-10 h-10 ${isSelected ? 'text-primary' : 'text-gray-600'} mb-2`} />
+        <feature.icon className={`w-10 h-10 ${isSelected ? 'text-[#00A3A3]' : 'text-gray-600'} mb-2`} />
         <CardTitle className={`${isSelected ? 'text-primary' : 'text-gray-900'}`}>{feature.title}</CardTitle>
       </CardHeader>
       <CardContent>
@@ -74,18 +74,17 @@ export default function ExpandedFeaturesSection({ t }: ExpandedFeaturesSectionPr
   ]
 
   return (
-    <section id="features" className="py-20 bg-white">
+    <section id="features" className="py-20 bg-gradient-to-b from-gray-100 via-gray-100 to-white ">
       <div className="container mx-auto px-4">
         <motion.h2 
-
-          className="text-4xl font-bold text-center mb-12 text-gray-900"
+          className="text-4xl font-bold text-center mb-12 text-[#1A2A3A]"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           {t.title}
         </motion.h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className=" grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {features.map((feature, index) => (
             <FeatureCard
               key={index}
@@ -97,7 +96,7 @@ export default function ExpandedFeaturesSection({ t }: ExpandedFeaturesSectionPr
         </div>
         <motion.div
           layout
-          className="bg-gray-50 rounded-lg p-8 mt-8"
+          className="bg-white rounded-lg p-8 mt-8"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -126,7 +125,7 @@ export default function ExpandedFeaturesSection({ t }: ExpandedFeaturesSectionPr
             transition={{ duration: 0.3, delay: 0.2 }}
           >
              <Link href={"/why-showcase-me"}>
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button className="bg-[#00A3A3] text-primary-foreground hover:bg-[#008C8C]">
              Learn More <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             </Link>

@@ -11,6 +11,7 @@ import { TestimonialsSectionComponent } from './testimonials-section'
 import { PricingSectionComponent } from './pricing-section'
 import { FaqSection } from './faq-section'
 import { FooterSectionComponent } from './footer-section'
+import { Separator } from './ui/separator'
 
 
 // Keep the existing translations object
@@ -424,8 +425,9 @@ export function LandingPage() {
         pricing: { ...t.features!.pricing, icon: CreditCard },
         customization: { ...t.features!.customization, icon: User },
       }} />
+      
       <HowItWorksSection t={t.howItWorks!} />
-      <TestimonialsSectionComponent t={t.testimonials!} />
+      {/* <TestimonialsSectionComponent t={t.testimonials!} /> */}
       <PricingSectionComponent t={t.pricing!} />
       <FaqSection t={t.faq!} />
       <FooterSectionComponent t={t.footer!} />

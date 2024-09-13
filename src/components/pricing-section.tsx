@@ -13,7 +13,7 @@ export function PricingSectionComponent({ t }: PricingSectionProps) {
   const [contributionType, setContributionType] = useState('monthly')
 
   return (
-    <section id="pricing" className="py-20 bg-gray-50">
+    <section id="pricing" className="py-20 bg-gradient-to-b from-gray-100 via-gray-100 to-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">{t.title}</h2>
         <Card className="max-w-md mx-auto border-gray-200">
@@ -53,7 +53,7 @@ export function PricingSectionComponent({ t }: PricingSectionProps) {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-black text-white hover:bg-gray-800">{t.cta}</Button>
+            <Button className="w-full bg-[#00A3A3] text-white hover:bg-[#008C8C]">{t.cta}</Button>
           </CardFooter>
         </Card>
       </div>

@@ -8,7 +8,7 @@ import { HeroSectionProps } from "~/lib/types/components"
 
 export function HeroSectionComponent({ t }: HeroSectionProps) {
   return (
-    <section id="hero" className="min-h-screen flex items-center bg-gray-50">
+    <section id="hero" className="min-h-screen flex items-center bg-gradient-to-b from-white via-gray-50 to-gray-100">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, x: -200, }}
@@ -20,7 +20,7 @@ export function HeroSectionComponent({ t }: HeroSectionProps) {
             {t.title}
           </h1>
           <p className="text-xl text-gray-700">{t.subtitle}</p>
-          <Button size="lg" className="bg-black text-white hover:bg-gray-800">
+          <Button size="lg" className="bg-[#FF6B6B] text-white hover:bg-[#f05757]">
             <Link href="/login">{t.cta}</Link>
           </Button>
         </motion.div>

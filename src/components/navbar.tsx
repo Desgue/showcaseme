@@ -36,7 +36,7 @@ export function NavbarComponent({ t, language, setLanguage, scrollTo, showNavbar
     <>
       {navItems.map((item, index) => (
         item.href ? (
-          <Button key={index} variant={item.primary ? "default" : "outline"} asChild>
+          <Button key={index} variant={item.primary ? "default" : "outline"} className={item.primary ? "bg-[#00A3A3] hover:bg-[#008C8C]" : "bg-white border-[#00A3A3] text-[#00A3A3] hover:text-[#00A3A3]  hover:bg-gray-50"}asChild>
             <Link href={item.href}>{item.label}</Link>
           </Button>
         ) : (
