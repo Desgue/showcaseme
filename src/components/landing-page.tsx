@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { User, CreditCard, Target, Globe, Laptop, Palette, Rocket } from 'lucide-react'
-import { Languages } from '~/lib/types/components'
+import { CombinedTranslations, Language } from '~/lib/types/components'
 import { HeroSectionComponent } from './hero-section'
 import ExpandedFeaturesSection from './features-section'
 import { NavbarComponent } from './navbar'
@@ -14,7 +14,7 @@ import { FooterSectionComponent } from './footer-section'
 
 
 // Keep the existing translations object
-export const translations = {
+export const translations: CombinedTranslations = {
   en: {
     nav: {
       features: "Features",
@@ -133,7 +133,9 @@ export const translations = {
       description: "Empowering professionals to showcase their talents and connect with their audience.",
       quickLinks: "Quick Links",
       home: "Home",
-      contact: "Contact Us"
+      contact: "Contact Us",
+      features: "Features",
+      pricing: "Pricing",
     }
   },
   pt: {
@@ -254,7 +256,9 @@ export const translations = {
       description: "Capacitando profissionais para mostrar seus talentos e se conectar com seu público.",
       quickLinks: "Links Rápidos",
       home: "Início",
-      contact: "Contate-nos"
+      contact: "Contate-nos",
+      features: "Funcionalidades",
+      pricing: "Preço"
     }
   },
   es: {
@@ -375,13 +379,15 @@ export const translations = {
       description: "Empoderando a profesionales para mostrar sus talentos y conectar con su audiencia.",
       quickLinks: "Enlaces Rápidos",
       home: "Inicio",
-      contact: "Contáctanos"
+      contact: "Contáctanos",
+      features: "Funcionalidad",
+      pricing: "Precio"
     }
   }
 }
 export function LandingPage() {
   const [showNavbar, setShowNavbar] = useState(false)
-  const [language, setLanguage] = useState<Languages>('en')
+  const [language, setLanguage] = useState<Language>('en')
   const t = translations[language]
 
   useEffect(() => {
@@ -404,25 +410,25 @@ export function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <NavbarComponent
-        t={t.nav} 
+        t={t.nav!} 
         language={language} 
         setLanguage={setLanguage} 
         scrollTo={scrollTo} 
         showNavbar={showNavbar}
       />
-      <HeroSectionComponent t={t.hero} />
+      <HeroSectionComponent t={t.hero!} />
       <ExpandedFeaturesSection t={{
-        ...t.features,
-        target: { ...t.features.target, icon: Target },
-        seo: { ...t.features.seo, icon: Globe },
-        pricing: { ...t.features.pricing, icon: CreditCard },
-        customization: { ...t.features.customization, icon: User },
+        ...t.features!,
+        target: { ...t.features!.target, icon: Target },
+        seo: { ...t.features!.seo, icon: Globe },
+        pricing: { ...t.features!.pricing, icon: CreditCard },
+        customization: { ...t.features!.customization, icon: User },
       }} />
-      <HowItWorksSection t={t.howItWorks} />
-      <TestimonialsSectionComponent t={t.testimonials} />
-      <PricingSectionComponent t={t.pricing} />
+      <HowItWorksSection t={t.howItWorks!} />
+      <TestimonialsSectionComponent t={t.testimonials!} />
+      <PricingSectionComponent t={t.pricing!} />
       <FaqSection t={t.faq} />
-      <FooterSectionComponent t={t.footer} />
+      <FooterSectionComponent t={t.footer!} />
     </div>
   )
     }

@@ -6,7 +6,7 @@ import { Button } from "~/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet"
 import { Menu } from 'lucide-react'
-import { Languages } from '~/lib/types/components'
+import { Language } from '~/lib/types/components'
 
 
 type NavbarProps = {
@@ -17,7 +17,7 @@ type NavbarProps = {
     createAccount: string;
   };
   language: string;
-  setLanguage: (lang: Languages) => void;
+  setLanguage: (lang: Language) => void;
   scrollTo: (id: string) => void;
   showNavbar: boolean;
 }
@@ -54,7 +54,7 @@ export function NavbarComponent({ t, language, setLanguage, scrollTo, showNavbar
         <h1 className="text-2xl font-bold text-black">Showcase Me</h1>
         <div className="hidden md:flex items-center space-x-4">
           <NavLinks />
-          <Select onValueChange={(v) => setLanguage(v as Languages)} defaultValue={language}>
+          <Select onValueChange={(v) => setLanguage(v as Language)} defaultValue={language}>
             <SelectTrigger className="w-[100px]">
               <SelectValue placeholder="Language" />
             </SelectTrigger>
@@ -75,7 +75,7 @@ export function NavbarComponent({ t, language, setLanguage, scrollTo, showNavbar
           <SheetContent side="right">
             <div className="flex flex-col space-y-4 mt-4">
               <NavLinks />
-              <Select onValueChange={(v) => setLanguage(v as Languages)} defaultValue={language}>
+              <Select onValueChange={(v) => setLanguage(v as Language)} defaultValue={language}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Language" />
                 </SelectTrigger>

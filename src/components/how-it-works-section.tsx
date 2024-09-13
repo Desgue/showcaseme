@@ -1,11 +1,11 @@
 'use client'
 
 import { motion } from "framer-motion"
-import type { HowItWorksStep, HowItWorksTranslation } from "~/lib/types/components"
+import { HowItWorksStepTranslations, HowItWorksTranslations } from "~/lib/types/components"
 
 
-const HowItWorksSection: React.FC<{ t: HowItWorksTranslation }> = ({ t }) => {
-  const steps: HowItWorksStep[] = [t.step1, t.step2, t.step3, t.step4]
+const HowItWorksSection: React.FC<{ t: HowItWorksTranslations }> = ({ t }) => {
+  const steps: HowItWorksStepTranslations[] = [t.step1, t.step2, t.step3, t.step4]
 
   return (
     <section id="how-it-works" className="py-20 bg-gray-50">

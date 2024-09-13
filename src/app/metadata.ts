@@ -31,7 +31,7 @@ export const metadata: Metadata = {
       description: 'Build a stunning, SEO-optimized business site in minutes. No coding required. Start your free trial today!',
       images: ['https://www.showcaseme.fly.dev/twitter-image.jpg'],
     }, */
-  viewport: 'width=device-width, initial-scale=1',
+
   robots: 'index, follow',
   alternates: {
     canonical: 'https://www.showcaseme.fly.dev',

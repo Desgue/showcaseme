@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
-import { TestimonialsSectionProps } from './types'
+import { TestimonialsSectionProps } from "~/lib/types/components"
 
 export function TestimonialsSectionComponent({ t }: TestimonialsSectionProps) {
   return (

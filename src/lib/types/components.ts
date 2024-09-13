@@ -1,14 +1,128 @@
 import { LucideIcon } from 'lucide-react'
 
-export type Languages = 'en' | 'pt' | 'es'
+export type Language = 'en' | 'pt' | 'es'
 
+export interface NavTranslations {
+    features: string;
+    pricing: string;
+    login: string;
+    createAccount: string;
+}
+
+export interface HeroTranslations {
+    title: string;
+    subtitle: string;
+    cta: string;
+}
+
+export interface FeatureTranslations {
+    icon: LucideIcon;
+    title: string;
+    description: string;
+    details: string;
+}
+
+export interface FeaturesTranslations {
+    title: string;
+    target: FeatureTranslations;
+    seo: FeatureTranslations;
+    pricing: FeatureTranslations;
+    customization: FeatureTranslations;
+}
+
+export interface HowItWorksStepTranslations {
+    icon: LucideIcon;
+    title: string;
+    description: string;
+    details: string;
+}
+
+export interface HowItWorksTranslations {
+    title: string;
+    step1: HowItWorksStepTranslations;
+    step2: HowItWorksStepTranslations;
+    step3: HowItWorksStepTranslations;
+    step4: HowItWorksStepTranslations;
+}
+
+export interface TestimonialTranslations {
+    name: string;
+    role: string;
+    quote: string;
+}
+
+export interface TestimonialsTranslations {
+    title: string;
+    testimonial1: TestimonialTranslations;
+    testimonial2: TestimonialTranslations;
+    testimonial3: TestimonialTranslations;
+}
+
+export interface PricingTranslations {
+    title: string;
+    subtitle: string;
+    cta: string;
+    features: string[];
+}
+
+export interface FAQItemTranslations {
+    q: string;
+    a: string;
+}
+
+export interface FAQTranslations {
+    title: string;
+    question1: FAQItemTranslations;
+    question2: FAQItemTranslations;
+    question3: FAQItemTranslations;
+    question4: FAQItemTranslations;
+}
+
+export interface FooterTranslations {
+    description: string;
+    quickLinks: string;
+    home: string;
+    contact: string;
+    features: string;
+    pricing: string;
+}
+
+export type WhyShowcaseMeContentItem = string | string[];
+
+export interface WhyShowcaseMeSectionTranslations {
+    title: string;
+    content: WhyShowcaseMeContentItem[];
+}
+
+export interface WhyShowcaseMeTranslations {
+    title: string;
+    lead: string;
+    targetAudience: WhyShowcaseMeSectionTranslations;
+    seo: WhyShowcaseMeSectionTranslations;
+    pricing: WhyShowcaseMeSectionTranslations;
+    customization: WhyShowcaseMeSectionTranslations;
+    conclusion: WhyShowcaseMeSectionTranslations;
+}
+
+export interface LanguageTranslations {
+    nav: NavTranslations;
+    hero: HeroTranslations;
+    features: FeaturesTranslations;
+    howItWorks: HowItWorksTranslations;
+    testimonials: TestimonialsTranslations;
+    pricing: PricingTranslations;
+    faq: FAQTranslations;
+    footer: FooterTranslations;
+    whyShowcaseMe: WhyShowcaseMeTranslations;
+}
+
+export type CombinedTranslations = {
+    [key in Language]: Partial<LanguageTranslations>;
+}
+
+// Component Props Interfaces
 export interface NavbarProps {
-    t: {
-        features: string;
-        pricing: string;
-        login: string;
-        createAccount: string;
-    };
+    t: NavTranslations;
     language: string;
     setLanguage: (lang: string) => void;
     scrollTo: (id: string) => void;
@@ -16,142 +130,25 @@ export interface NavbarProps {
 }
 
 export interface HeroSectionProps {
-    t: {
-        title: string;
-        subtitle: string;
-        cta: string;
-    };
+    t: HeroTranslations;
 }
 
-export interface FeaturesSectionProps {
-    t: {
-        title: string;
-        target: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-        };
-        seo: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-        };
-        pricing: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-        };
-        customization: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-        };
-    };
-}
 export interface ExpandedFeaturesSectionProps {
-    t: {
-        title: string;
-        target: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-            details: string;
-        };
-        seo: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-            details: string;
-        };
-        pricing: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-            details: string;
-        };
-        customization: {
-            icon: LucideIcon;
-            title: string;
-            description: string;
-            details: string;
-        };
-    };
-}
-
-export interface HowItWorksStep {
-    icon: LucideIcon;
-    title: string;
-    description: string;
-    details: string;
-}
-
-export interface HowItWorksTranslation {
-    title: string;
-    step1: HowItWorksStep;
-    step2: HowItWorksStep;
-    step3: HowItWorksStep;
-    step4: HowItWorksStep;
+    t: FeaturesTranslations;
 }
 
 export interface TestimonialsSectionProps {
-    t: {
-        title: string;
-        testimonial1: {
-            name: string;
-            role: string;
-            quote: string;
-        };
-        testimonial2: {
-            name: string;
-            role: string;
-            quote: string;
-        };
-        testimonial3: {
-            name: string;
-            role: string;
-            quote: string;
-        };
-    };
+    t: TestimonialsTranslations;
 }
 
 export interface PricingSectionProps {
-    t: {
-        title: string;
-        subtitle: string;
-        cta: string;
-        features: string[];
-    };
+    t: PricingTranslations;
 }
 
 export interface FAQSectionProps {
-    t: {
-        title: string;
-        question1: {
-            q: string;
-            a: string;
-        };
-        question2: {
-            q: string;
-            a: string;
-        };
-        question3: {
-            q: string;
-            a: string;
-        };
-        question4: {
-            q: string;
-            a: string;
-        };
-    };
+    t: FAQTranslations;
 }
 
 export interface FooterSectionProps {
-    t: {
-        description: string;
-        quickLinks: string;
-        home: string;
-        features: string;
-        pricing: string;
-        contact: string;
-    };
+    t: FooterTranslations;
 }

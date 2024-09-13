@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Target, Globe, CreditCard, User, ArrowRight, LucideProps } from 'lucide-react'
 import { Button } from './ui/button'
 import { ExpandedFeaturesSectionProps } from '~/lib/types/components'
+import Link from 'next/link'
 
 
 type FeatureCardProps = {
@@ -124,9 +125,11 @@ export default function ExpandedFeaturesSection({ t }: ExpandedFeaturesSectionPr
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
           >
+             <Link href={"/why-showcase-me"}>
             <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Learn More <ArrowRight className="ml-2 h-4 w-4" />
+             Learn More <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
+            </Link>
           </motion.div>
         </motion.div>
       </div>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from "~/components/ui/button"
-import { HeroSectionProps } from './types'
+import { HeroSectionProps } from "~/lib/types/components"
 
 export function HeroSectionComponent({ t }: HeroSectionProps) {
   return (

@@ -1,6 +1,7 @@
 'use client'
 
-import { FooterSectionProps } from './types'
+import { FooterSectionProps } from "~/lib/types/components"
+
 
 export function FooterSectionComponent({ t }: FooterSectionProps) {
   return (
