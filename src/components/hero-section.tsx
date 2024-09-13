@@ -16,9 +16,11 @@ export function HeroSectionComponent({ t }: HeroSectionProps) {
           transition={{type:"spring", duration: 1 }}
           className="space-y-6"
         >
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 text-transparent bg-clip-text">
-            {t.title}
-          </h1>
+
+          <h1 className="text-4xl tracking-tight font-extrabold bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 text-transparent bg-clip-text sm:text-5xl md:text-5xl">
+              <span className="block xl:inline">{t.title.split(' ').slice(0, -1).join(' ')}</span>{' '}
+              <span className="block text-[#FF6B6B] xl:inline">{t.title.split(' ').slice(-1)}</span>
+            </h1>
           <p className="text-xl text-gray-700">{t.subtitle}</p>
           <Button size="lg" className="bg-[#FF6B6B] text-white hover:bg-[#f05757]">
             <Link href="/login">{t.cta}</Link>
