@@ -1,7 +1,7 @@
 'use client'
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion"
-import { FAQSectionProps } from './types'
+import { FAQSectionProps } from "~/lib/types/components"
 
 export function FaqSection({ t }: FAQSectionProps) {
   return (

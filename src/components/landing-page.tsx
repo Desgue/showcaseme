@@ -427,7 +427,7 @@ export function LandingPage() {
       <HowItWorksSection t={t.howItWorks!} />
       <TestimonialsSectionComponent t={t.testimonials!} />
       <PricingSectionComponent t={t.pricing!} />
-      <FaqSection t={t.faq} />
+      <FaqSection t={t.faq!} />
       <FooterSectionComponent t={t.footer!} />
     </div>
   )
