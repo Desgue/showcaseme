@@ -5,6 +5,8 @@ import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import { FaGoogle } from 'react-icons/fa'
 import { googlelogin } from '~/actions/supabase/auth'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 const LoginPageComponent: React.FC = () => {
   const handleGoogleLogin = () => {
@@ -14,12 +16,17 @@ const LoginPageComponent: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+        
+        
+ 
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="absolute inset-0 overflow-hidden"
       >
+        
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
@@ -45,11 +52,19 @@ const LoginPageComponent: React.FC = () => {
       </motion.div>
 
       <div className="w-full max-w-md z-10">
+      
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
+          <Link
+          href="/"
+          className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 mb-8"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Home
+        </Link>
           <Card className="w-full">
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-center">Welcome to Showcase Me</CardTitle>

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import React from 'react'
 import LoginPageComponent from '~/components/login-page'
+import { NavbarComponent } from '~/components/navbar';
 import { createClient } from '~/utils/supabase/server';
 
 async function LoginPage() {
@@ -10,7 +11,9 @@ async function LoginPage() {
     redirect("/dashboard");
   }
   return (
+    <>
     <LoginPageComponent/>
+    </>
   )
 }
 
