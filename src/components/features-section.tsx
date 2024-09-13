@@ -77,7 +77,7 @@ export default function ExpandedFeaturesSection({ t }: ExpandedFeaturesSectionPr
     <section id="features" className="py-20 bg-gradient-to-b from-gray-100 via-gray-100 to-white ">
       <div className="container mx-auto px-4">
         <motion.h2 
-          className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-transparent bg-clip-text"
+          className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-transparent bg-clip-text"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}

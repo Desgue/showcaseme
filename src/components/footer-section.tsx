@@ -18,18 +18,18 @@ export function FooterSectionComponent({ t }: FooterSectionProps) {
             transition={{ duration: 0.5 }}
           >
             <h3 className="text-xl font-bold mb-4">Showcase Me</h3>
-            <p className="text-blue-200 mb-4">{t.description}</p>
+            <p className="text-white text-muted-foreground mb-4">{t.description}</p>
             <div className="flex space-x-4">
-              <a href="#" className="text-blue-300 hover:text-yellow-300 transition-colors">
+              <a href="#" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-blue-300 hover:text-yellow-300 transition-colors">
+              <a href="#" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-blue-300 hover:text-yellow-300 transition-colors">
+              <a href="#" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-blue-300 hover:text-yellow-300 transition-colors">
+              <a href="#" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -41,10 +41,10 @@ export function FooterSectionComponent({ t }: FooterSectionProps) {
           >
             <h3 className="text-xl font-bold mb-4">{t.quickLinks}</h3>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-blue-200 hover:text-yellow-300 transition-colors">{t.home}</Link></li>
-              <li><Link href="#features" className="text-blue-200 hover:text-yellow-300 transition-colors">{t.features}</Link></li>
-              <li><Link href="#pricing" className="text-blue-200 hover:text-yellow-300 transition-colors">{t.pricing}</Link></li>
-              <li><Link href="#faq" className="text-blue-200 hover:text-yellow-300 transition-colors">FAQ</Link></li>
+              <li><Link href="/" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">{t.home}</Link></li>
+              <li><Link href="#features" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">{t.features}</Link></li>
+              <li><Link href="#pricing" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">{t.pricing}</Link></li>
+              <li><Link href="#faq" className="text-white text-muted-foreground hover:text-[#008C8C] transition-colors">FAQ</Link></li>
             </ul>
           </motion.div>
           <motion.div
@@ -53,9 +53,9 @@ export function FooterSectionComponent({ t }: FooterSectionProps) {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h3 className="text-xl font-bold mb-4">{t.contact}</h3>
-            <p className="text-blue-200 mb-2">Email: support@showcaseme.com</p>
-            <p className="text-blue-200 mb-2">Phone: (123) 456-7890</p>
-            <p className="text-blue-200">123 Showcase Street, Web City, 12345</p>
+            <p className="text-white text-muted-foreground mb-2">Email: support@showcaseme.com</p>
+            <p className="text-white text-muted-foreground mb-2">Phone: (123) 456-7890</p>
+            <p className="text-white text-muted-foreground">123 Showcase Street, Web City, 12345</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -63,16 +63,16 @@ export function FooterSectionComponent({ t }: FooterSectionProps) {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <h3 className="text-xl font-bold mb-4">Newsletter</h3>
-            <p className="text-blue-200 mb-4">Stay updated with our latest features and releases.</p>
+            <p className="text-white text-muted-foreground mb-4">Stay updated with our latest features and releases.</p>
             <form className="flex">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-grow px-4 py-2 bg-blue-800 text-white placeholder-blue-300 border border-blue-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                className="flex-grow px-4 py-2  text-black placeholder-black rounded-l-md focus:outline-none "
               />
               <button
                 type="submit"
-                className="px-4 py-2 bg-yellow-400 text-blue-900 font-semibold rounded-r-md hover:bg-yellow-300 transition-colors"
+                className="px-4 py-2 bg-[#00A3A3] text-white hover:text-[#008C8C] font-semibold rounded-r-md transition-colors"
               >
                 Subscribe
               </button>
@@ -80,7 +80,7 @@ export function FooterSectionComponent({ t }: FooterSectionProps) {
           </motion.div>
         </div>
         <motion.div
-          className="mt-12 pt-8 border-t border-blue-800 text-center text-blue-300"
+          className="mt-12 pt-8 border-t border-[#008C8C] text-center text-white text-muted-foreground"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}

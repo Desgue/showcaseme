@@ -10,7 +10,7 @@ const HowItWorksSection: React.FC<{ t: HowItWorksTranslations }> = ({ t }) => {
   return (
     <section id="how-it-works" className="py-20 bg-gradient-to-b from-white via-gray-50 to-gray-100">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-transparent bg-clip-text">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-transparent bg-clip-text">
           <span className="block xl:inline">{t.title.split(' ').slice(0, -1).join(' ')}</span>{' '}
           <span className="block text-[#FF6B6B] xl:inline">{t.title.split(' ').slice(-1)}</span>
         </h2>
@@ -34,7 +34,7 @@ const HowItWorksSection: React.FC<{ t: HowItWorksTranslations }> = ({ t }) => {
                     : 'md:ml-auto md:pl-8 md:text-left'
                 } mb-8 md:mb-0`}
                 >
-                <h3 className="text-2xl font-semibold mb-2 text-gray-700 max-md:flex max-md:gap-4"> <step.icon className="md:hidden w-8 h-8  text-gray-600" />
+                <h3 className="text-2xl font-semibold mb-2 text-gray-700 max-md:flex max-md:gap-4"> <step.icon className="md:hidden w-8 h-8  text-[#00A3A3]" />
                 {step.title} 
                 </h3>
                 <p className="text-gray-600 mb-2">{step.description}</p>

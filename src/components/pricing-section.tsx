@@ -15,7 +15,7 @@ export function PricingSectionComponent({ t }: PricingSectionProps) {
   return (
     <section id="pricing" className="py-20 bg-gradient-to-b from-gray-100 via-gray-100 to-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-transparent bg-clip-text">{t.title}</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-transparent bg-clip-text">{t.title}</h2>
         <Card className="max-w-md mx-auto border-gray-200">
           <CardHeader>
             <CardTitle className="text-gray-900">{t.title}</CardTitle>
