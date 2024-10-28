@@ -1,1 +1,1 @@
-# Projeto em pausa. | Project paused. 
+# Projeto em pausa | Project paused
